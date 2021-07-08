@@ -1,0 +1,21 @@
+.newPostName {
+    width: 25rem;
+}
+
+.newPostText {
+    width: 25rem;
+    height: 7rem;
+}
+
+.newPostActionBtnContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.newPostBtn {
+    width: 3rem;
+    border: none;
+    background: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+}

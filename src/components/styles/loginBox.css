@@ -1,0 +1,18 @@
+.inputUsername {
+    width: 10rem;
+    padding: 0.5rem;
+}
+
+.inputPassword {
+    width: 10rem;
+    padding: 0.5rem;
+}
+
+.loginBtn {
+    font-weight: 1000;
+    color: #000000;
+    background-color: none;
+    width: 5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+}

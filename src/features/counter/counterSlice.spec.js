@@ -7,7 +7,7 @@ import counterReducer, {
 describe('counter reducer', () => {
   const initialState = {
     value: 3,
-    status: 'idle',
+    status: 'idle', 
   };
   it('should handle initial state', () => {
     expect(counterReducer(undefined, { type: 'unknown' })).toEqual({
