@@ -55,7 +55,7 @@ export const Profile = () => {
             .map((post) => {
               return (
                 <Post
-                  authorName={post.user.name}
+                  authorName={post.user.username}
                   postText={post.caption}
                   postLikes={post.likes}
                   onLikeBtnClick={() => dispatch(likeBtnClicked(post._postID))}

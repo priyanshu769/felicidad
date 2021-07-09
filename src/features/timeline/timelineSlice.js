@@ -41,10 +41,47 @@ const initialState = {
     {
       _postID: 'p1205',
       caption: "doing the frontend seems hard but it isn't",
-      likes: 32,
+      likes: 1,
       user: {
         userID: 'u1234',
         username: 'priyanshu',
+      },
+    },
+    {
+      _postID: 'p1206',
+      caption: 'living in the moment is very precious',
+      likes: 62,
+      user: {
+        userID: 'u1235',
+        username: 'priyam',
+      },
+    },
+    {
+      _postID: 'p1207',
+      caption:
+        'building an idea is one thing and coming up with one is another.',
+      likes: 2,
+      user: {
+        userID: 'u1235',
+        username: 'priyam',
+      },
+    },
+    {
+      _postID: 'p1208',
+      caption: 'anime suggestion: attack on titans',
+      likes: 4,
+      user: {
+        userID: 'u1236',
+        username: 'ayush',
+      },
+    },
+    {
+      _postID: 'p1209',
+      caption: 'anime movie suggestion: garden of words',
+      likes: 13,
+      user: {
+        userID: 'u1236',
+        username: 'ayush',
       },
     },
   ],
@@ -65,8 +102,8 @@ const timelineSlice = createSlice({
     addPost: (state, action) => {
       console.log(state)
       console.log(state.posts)
-      const newState = {...state, posts: [...state.posts, action.payload]}
-      return (newState)
+      const newState = { ...state, posts: [...state.posts, action.payload] }
+      return newState
     },
   },
 })

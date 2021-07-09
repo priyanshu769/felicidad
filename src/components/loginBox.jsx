@@ -1,13 +1,31 @@
-import "./styles/loginBox.css"
+import './styles/loginSignupBox.css'
 
-export const LoginBox = () => {
+export const LoginBox = (props) => {
   return (
     <div>
-      <input className="inputUsername" type="text" placeholder="username" />
-      <br />
-      <input className="inputPassword" type="password" placeholder="password" />
-      <br />
-      <button className="loginBtn">Login</button>
+      <form>
+        <input
+          onChange={props.usernameText}
+          className="inputUsername"
+          type="text"
+          placeholder="username"
+        />
+        <br />
+        <input
+          onChange={props.passwordText}
+          className="inputPassword"
+          type="text"
+          placeholder="password"
+        />
+        <br />
+        <button
+          onClick={props.loginBtnClick}
+          className="loginBtn"
+          type="submit"
+        >
+          Login
+        </button>
+      </form>
     </div>
   )
 }

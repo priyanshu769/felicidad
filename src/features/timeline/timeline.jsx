@@ -28,8 +28,6 @@ export const Timeline = () => {
     }
   }
 
-  console.log(newPost())
-
   return (
     <div>
       <NewPost

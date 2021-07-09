@@ -16,11 +16,14 @@ const profileSlice = createSlice({
     status: 'idle',
   },
   reducers: {
+    setUser: (state, action) => {
+      return { ...state, user: action.payload }
+    },
     updateName: (state, action) => {
       return (state.user.name = action.payload)
     },
   },
 })
-export const { updateName } = profileSlice.actions
+export const { setUser, updateName } = profileSlice.actions
 
 export default profileSlice.reducer
