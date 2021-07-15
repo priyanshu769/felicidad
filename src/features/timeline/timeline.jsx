@@ -5,12 +5,9 @@ import { useSelector, useDispatch } from 'react-redux'
 
 export const Timeline = () => {
   const posts = useSelector((state) => {
-    console.log(state)
     return state.timeline.posts
   })
-  console.log(posts)
   const user = useSelector((state) => {
-    console.log(state)
     return state.profile.user
   })
   const dispatch = useDispatch()

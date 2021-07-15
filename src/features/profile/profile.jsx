@@ -1,19 +1,31 @@
 import { useState } from 'react'
-import { NewPost, ProfileDetail, Post } from '../../components/index'
+import {
+  NewPost,
+  ProfileDetail,
+  Post,
+  ProfileUtilityBtn,
+} from '../../components/index'
 import { likeBtnClicked, addPost } from '../timeline/timelineSlice'
 import { useParams } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
 
 export const Profile = () => {
   const { username } = useParams()
-  console.log(username)
+  const usersList = useSelector(state => state.auth.usersList)
   const user = useSelector((state) => {
     return state.profile.user
   })
   const posts = useSelector((state) => {
     return state.timeline.posts
   })
-  console.log(posts.filter((post) => post.user.userID === user.userID))
+  const loggedInUser = useSelector((state) => {
+    return state.auth.loggedInUser?.username
+  })
+  const userToShowFromParam = () => {
+    const userToShow = usersList.find((user) => user.username === username)
+    return userToShow
+  }
+  const userProfileToShow = userToShowFromParam()
   const dispatch = useDispatch()
   const [newPostText, setNewPostText] = useState('')
 
@@ -32,14 +44,21 @@ export const Profile = () => {
   return (
     <div>
       <ProfileDetail
-        name={user.username}
-        following={user.following.length}
-        followers={user.followers.length}
-        bio={user.bio}
-        toUserFollowing={`/${user.username}/following`}
-        toUserFollowers={`/${user.username}/followers`}
+        name={userProfileToShow.name}
+        followingNumbers={userProfileToShow.following.length}
+        followersNumbers={userProfileToShow.followers.length}
+        bio={userProfileToShow.bio}
+        toUserFollowing={`/${userProfileToShow.username}/following`}
+        toUserFollowers={`/${userProfileToShow.username}/followers`}
+      />
+      <ProfileUtilityBtn
+        displayFollow={username !== loggedInUser ? 'block' : 'none'}
+        displayEdit={username === loggedInUser ? 'block' : 'none'}
+        // followBtnClicked={}
+        editBtnClicked={`/${loggedInUser}/edit`}
       />
       <NewPost
+        displayNewPost={username === loggedInUser ? 'block' : 'none'}
         newPostValue={newPostText}
         onChangeTextArea={(e) => setNewPostText(e.target.value)}
         totalCharacters={`${newPostText.length}/240`}
@@ -48,10 +67,10 @@ export const Profile = () => {
           setNewPostText('')
         }}
       />
-      {user.posts.length === 0
-        ? 'Publish your first post.'
+      {userProfileToShow.posts.length === 0
+        ? 'Zero posts to show.'
         : posts
-            .filter((post) => post.user.userID === user.userID)
+            .filter((post) => post.user.userID === userProfileToShow.userID)
             .map((post) => {
               return (
                 <Post

@@ -14,10 +14,10 @@ export const ProfileDetail = (props) => {
       </div>
       <div>
         <Link to={props.toUserFollowing}>
-          <button className="profileBtn">Following {props.following}</button>
+          <button className="profileBtn">Following {props.followingNumbers}</button>
         </Link>
         <Link to={props.toUserFollowers}>
-          <button className="profileBtn">Followers {props.followers}</button>
+          <button className="profileBtn">Followers {props.followersNumbers}</button>
         </Link>
       </div>
       <p className="profileBio">{props.bio}</p>

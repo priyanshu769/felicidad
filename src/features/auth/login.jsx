@@ -1,57 +1,22 @@
 import { LoginBox } from '../../components/index'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { toggleLoggedIn, setLoggedInUser } from './authSlice'
 import { setUser } from '../profile/profileSlice'
-
-export const usersList = [
-  {
-    userID: 'u1234',
-    username: 'priyanshu',
-    password: '123',
-    name: 'Priyanshu',
-    bio:
-      "I’m not always sarcastic. Sometimes, I’m sleeping. I'm so good at sleeping i can do it with my eyes closed!",
-    following: [],
-    followers: [],
-    posts: ['p1201', 'p1202', 'p1203', 'p1204', 'p1205'],
-  },
-  {
-    userID: 'u1235',
-    username: 'priyam',
-    password: 'idea098',
-    name: 'Priyam',
-    bio: 'Enthu & milennial',
-    following: [],
-    followers: [],
-    posts: ['p1206', 'p1207'],
-  },
-  {
-    userID: 'u1236',
-    username: 'ayush',
-    password: 'otaku123',
-    name: 'Ayush',
-    bio: 'Anime is my concern!',
-    following: [],
-    followers: [],
-    posts: ['p1208', 'p1209'],
-  },
-]
 
 export const Login = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [displayMsg, setDisplayMsg] = useState('')
   const dispatch = useDispatch()
-
+  const usersList = useSelector(state => state.auth.usersList)
   const userLogin = (username, password) => {
     const findUserFromUsersList = usersList.find(
       (user) => user.username === username,
     )
-    console.log(findUserFromUsersList)
     if (findUserFromUsersList) {
       if (findUserFromUsersList.password === password) {
-        console.log('password match')
         dispatch(
           setLoggedInUser({
             username: findUserFromUsersList.username,
@@ -70,8 +35,19 @@ export const Login = () => {
           }),
         )
         dispatch(toggleLoggedIn(true))
-      }
-    }
+        setDisplayMsg('')
+        localStorage.setItem(
+          'loggedInSM',
+          JSON.stringify({
+            loggedInStatus: true,
+            loggedInUser: {
+              username: findUserFromUsersList.username,
+              userID: findUserFromUsersList.userID,
+            },
+          }),
+        )
+      } else setDisplayMsg('Username or Password is incorrect.')
+    } else setDisplayMsg('Username or Password is incorrect.')
   }
   return (
     <div>
@@ -80,8 +56,9 @@ export const Login = () => {
         passwordText={(e) => setPassword(e.target.value)}
         loginBtnClick={() => userLogin(username, password)}
       />
+      <p>{displayMsg}</p>
       <p>
-        Don't have an account? <Link to="/signUp">Create One</Link>.
+        Don't have an account? <Link to="/signup">Create One</Link>.
       </p>
     </div>
   )

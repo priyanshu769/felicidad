@@ -1,0 +1,15 @@
+.profileUtilityBtnContainer {
+
+}
+
+.profileUtilityBtn {
+    border: 3px solid #000000;
+    border-radius: 10px;
+    width: 7rem;
+    padding: 0.5rem;
+    background-color: #ffffff;
+    font-weight: bold;
+    margin: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+}
