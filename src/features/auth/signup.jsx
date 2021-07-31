@@ -12,14 +12,10 @@ export const Signup = () => {
   const usersList = useSelector(state => state.auth.usersList)
   const signupBtnClicked = () => {
     usersList.push({
-      userID: `u${Math.floor(Math.random()*69)}`,
       username: username,
       password: password,
       name: name,
-      bio: '',
-      following: [],
-      followers: [],
-      posts: [],
+      email: email
     })
     setDisplayMessage("Now you can Login.")
     console.log(usersList)

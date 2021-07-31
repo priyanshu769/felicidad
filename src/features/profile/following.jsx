@@ -1,8 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router'
 import { FollowerCard } from '../../components'
-import { addToFollowing, removeFromFollowing } from './profileSlice'
-
 
 export const Following = () => {
   const { username } = useParams()
@@ -11,19 +9,19 @@ export const Following = () => {
   const userLoggedIn = useSelector((state) => state.profile.user)
   const dispatch = useDispatch()
 
-  const followBtnFunction = (userToFollow) => {
-    dispatch(addToFollowing(userToFollow))
-  }
+  // const followBtnFunction = (userToFollow) => {
+  //   dispatch(addToFollowing(userToFollow))
+  // }
 
-  const followingBtnFunction = (userToUnfollow) => {
-    dispatch(removeFromFollowing(userToUnfollow))
-  }
+  // const followingBtnFunction = (userToUnfollow) => {
+  //   dispatch(removeFromFollowing(userToUnfollow))
+  // }
 
-  const followCardBtnClick = (followerUser) => {
-    if (userLoggedIn.following.includes(followerUser)){
-      followingBtnFunction(followerUser)
-    } else followBtnFunction(followerUser)
-  }
+  // const followCardBtnClick = (followerUser) => {
+  //   if (userLoggedIn.following.includes(followerUser)){
+  //     followingBtnFunction(followerUser)
+  //   } else followBtnFunction(followerUser)
+  // }
 
   return (
     <div>
@@ -39,7 +37,7 @@ export const Following = () => {
                 ? 'Following'
                 : 'Follow'
             }
-            followerCardBtnClick={()=> followCardBtnClick(followingUser)}
+            // followerCardBtnClick={()=> followCardBtnClick(followingUser)}
           />
         )
       })}

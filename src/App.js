@@ -1,5 +1,5 @@
 import './App.css'
-import { Routes, Route, Link, useParams } from 'react-router-dom'
+import { Routes, Route, Link } from 'react-router-dom'
 import {
   Timeline,
   Profile,
@@ -15,85 +15,80 @@ import {
   ReversePrivateRoute,
 } from './components/index'
 import { useSelector, useDispatch } from 'react-redux'
-import {
-  toggleLoggedIn,
-  setLoggedInUser,
-} from './features/auth/authSlice'
-import { setUser } from './features/profile/profileSlice'
+import { setUser, fetchLoggedInUser } from './features/profile/profileSlice'
+import { setLoggedInToken } from './features/auth/authSlice'
+import { fetchPosts } from './features/timeline/timelineSlice'
 import { useEffect } from 'react'
 
 function App() {
-  const usersList = useSelector(state => state.auth.usersList)
-  const loggedIn = useSelector((state) => {
-    return state.auth.loggedIn
-  })
-  const userLoggedIn = useSelector((state) => {
-    return state.auth.loggedInUser?.username
-  })
+  const {loggedInToken} = useSelector((state) => state.auth)
+  const {loggedInUser, status} = useSelector((state) => state.profile)
+  const timeline = useSelector((state) => state.timeline)
   const dispatch = useDispatch()
+
   useEffect(() => {
-    const loggedInFromLocalStorage = JSON.parse(
-      localStorage.getItem('loggedInSM'),
-    )
-    if (loggedInFromLocalStorage?.loggedInStatus) {
-      const findUserFromUsersList = usersList.find(
-        (user) =>
-          user.username === loggedInFromLocalStorage?.loggedInUser.username,
-      )
-      dispatch(toggleLoggedIn(true))
-      dispatch(setLoggedInUser(loggedInFromLocalStorage?.loggedInUser))
-      dispatch(
-        setUser({
-          userID: findUserFromUsersList.userID,
-          username: findUserFromUsersList.username,
-          name: findUserFromUsersList.name,
-          bio: findUserFromUsersList.bio,
-          following: findUserFromUsersList.following,
-          followers: findUserFromUsersList.followers,
-          posts: findUserFromUsersList.posts,
-        }),
-      )
+    const dataFromLocalStorage = JSON.parse(localStorage?.getItem('loggedInToken'))
+    const token = dataFromLocalStorage?.token
+    if (token) {
+      console.log("triggered, setLoggedInToken")
+      dispatch(setLoggedInToken(token))
     }
-  }, [])
+  }, [dispatch])
+  
+  useEffect(()=> {
+    (async()=> {
+      if (loggedInToken && status === "idle"){
+        console.log("triggered, fetchLoggedInUser")
+        dispatch(fetchLoggedInUser(loggedInToken))
+      }
+    })()
+  }, [dispatch, loggedInToken])
+
+  useEffect(() => {
+      if (loggedInToken && timeline.status === 'idle'){
+        console.log("triggered, fetchPosts")
+        dispatch(fetchPosts())
+      }
+  }, [dispatch, timeline.status, loggedInToken])
+  
   return (
     <div className="App">
-      <div style={{ display: loggedIn ? 'block' : 'none' }}>
+      <div style={{ display: loggedInToken ? 'block' : 'none' }}>
         <Link to="/">Home</Link>
-        <Link to={`/${userLoggedIn}`}>Profile</Link>
+        <Link to={`/${loggedInUser?.username}`}>Profile</Link>
         <button
           onClick={() => {
-            dispatch(toggleLoggedIn(false))
-            dispatch(setUser(''))
-            dispatch(setLoggedInUser(''))
-            localStorage.removeItem('loggedInSM')
+            dispatch(setUser(null))
+            dispatch(setLoggedInToken(null))
+            localStorage.removeItem('loggedInToken')
           }}
         >
           Logout
         </button>
       </div>
       <Routes>
-        <DoublePrivateRoute login={loggedIn} element={<Timeline />} path="/" />
+        <DoublePrivateRoute login={loggedInToken} element={<Timeline />} path="/" />
         <Route
           path="/:username"
           element={<Profile />}
         />
         <PrivateRoute
-          login={loggedIn}
+          login={loggedInToken}
           path="/:username/followers"
           element={<Followers />}
         />
         <PrivateRoute
-          login={loggedIn}
+          login={loggedInToken}
           path="/:username/following"
           element={<Following />}
         />
         <PrivateRoute
-          login={loggedIn}
+          login={loggedInToken}
           path="/:username/edit"
           element={<EditProfile />}
         />
         <ReversePrivateRoute
-          login={loggedIn}
+          login={loggedInToken}
           path="/signup"
           element={<Signup />}
         />

@@ -1,54 +1,61 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import axios from 'axios'
+
+export const loginUser = createAsyncThunk("auth/loginUser", async(loginUserObj)=> {
+  const res = await axios.post('https://felicidad-api.herokuapp.com/login', loginUserObj)
+  if(res.data.success){
+    localStorage.setItem("loggedInToken", JSON.stringify({token: res.data.token}))
+  }
+  return res.data
+})
+export const signupUser = createAsyncThunk("auth/signupNewUser", async(newUserObj)=> {
+  const res = await axios.post('https://felicidad-api.herokuapp.com/signup', newUserObj)
+  if(res.data.success){
+    localStorage.setItem("loggedInToken", JSON.stringify({token: res.data.token}))
+  }
+  return res.data
+})
 
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    loggedIn: false,
-    loggedInUser: "",
-    usersList: [
-      {
-        userID: 'u1234',
-        username: 'priyanshu',
-        password: '123',
-        name: 'Priyanshu',
-        bio:
-          "I’m not always sarcastic. Sometimes, I’m sleeping. I'm so good at sleeping i can do it with my eyes closed!",
-        following: ["priyam"],
-        followers: ["ayush", "priyam"],
-        posts: ['p1201', 'p1202', 'p1203', 'p1204', 'p1205'],
-      },
-      {
-        userID: 'u1235',
-        username: 'priyam',
-        password: 'idea098',
-        name: 'Priyam',
-        bio: 'Enthu & milennial',
-        following: ["ayush", "priyanshu"],
-        followers: ["ayush", "priyanshu"],
-        posts: ['p1206', 'p1207'],
-      },
-      {
-        userID: 'u1236',
-        username: 'ayush',
-        password: 'otaku123',
-        name: 'Ayush',
-        bio: 'Anime is my concern!',
-        following: ["priyanshu", "priyam"],
-        followers: [, "priyam"],
-        posts: ['p1208', 'p1209'],
-      },
-    ]
+    loggedInToken: null,
+    status: "Logged Out",
+    error: null
   },
   reducers: {
-    toggleLoggedIn: (state, action) => {
-      return {...state, loggedIn: action.payload}
-    },
-    setLoggedInUser: (state, action) => {
-      return { ...state, loggedInUser: action.payload }
-    },
+    setLoggedInToken: (state, action) => {
+      return {...state, loggedInToken: action.payload}
+    }
   },
+  extraReducers: {
+    [loginUser.pending]: (state, action) => {
+      state.status = "Logging In"
+    },
+    [loginUser.fulfilled]: (state, action) => {
+      if (action.payload.success && action.payload.token){
+        state.loggedInToken = action.payload.token
+        state.status = "Logged In"
+      } else state.status = "Error Logging In"
+    },
+    [loginUser.error]: (state, action) => {
+      state.error = action.error.message
+      state.status = "Error Logging In"
+    },
+    [signupUser.pending]: (state, action) => {
+      state.status = "Signing Up"
+    },
+    [signupUser.fulfilled]: (state, action) => {
+      state.loggedInToken = action.payload.token
+      state.status = "Signed Up"
+    },
+    [signupUser.error]: (state, action) => {
+      state.error = action.error.message
+      state.status = "Error Signing Up"
+    },
+  }
 })
 
-export const { toggleLoggedIn, setLoggedInUser } = authSlice.actions
+export const { setLoggedInToken } = authSlice.actions
 
 export default authSlice.reducer

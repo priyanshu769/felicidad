@@ -1,28 +1,23 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Post, NewPost } from '../../components/index'
-import { likeBtnClicked, addPost } from './timelineSlice'
 import { useSelector, useDispatch } from 'react-redux'
+import axios from 'axios'
+import { fetchPosts } from './timelineSlice'
+import { setUser } from '../profile/profileSlice'
 
 export const Timeline = () => {
-  const posts = useSelector((state) => {
-    return state.timeline.posts
-  })
-  const user = useSelector((state) => {
-    return state.profile.user
-  })
+  const loggedInUser = useSelector((state) => state.profile.loggedInUser)
+  const timeline = useSelector((state) => state.timeline)
   const dispatch = useDispatch()
   const [newPostText, setNewPostText] = useState('')
 
   const newPost = () => {
-    return {
-      _postID: 'p01206',
-      caption: newPostText,
-      likes: 0,
-      user: {
-        userID: user.userID,
-        username: user.username,
-      },
-    }
+    return {caption: newPostText,
+    likes: 0,
+    user: {
+      userId: loggedInUser?._id,
+      username: loggedInUser.username,
+    }}
   }
 
   return (
@@ -32,17 +27,19 @@ export const Timeline = () => {
         onChangeTextArea={(e) => setNewPostText(e.target.value)}
         totalCharacters={`${newPostText.length}/240`}
         onPostBtnClick={() => {
-          dispatch(addPost(newPost()))
+        {/*dispatch(addPost(newPost()))*/}
           setNewPostText('')
         }}
       />
-      {posts.map((post) => {
+      {timeline.status==="loading" && <h2>Loading...</h2>}
+      {timeline.status==="error" && <h2 style={{color: "red"}}>Some error occured...</h2>}
+      {timeline.status==="fullfilled" && timeline.posts.map((post) => {
         return (
           <Post
             authorName={post.user.username}
             postText={post.caption}
             postLikes={post.likes}
-            onLikeBtnClick={() => dispatch(likeBtnClicked(post._postID))}
+            // onLikeBtnClick={() => dispatch(likeBtnClicked(post._postID))}
           />
         )
       })}

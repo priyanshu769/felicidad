@@ -1,26 +1,37 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import axios from 'axios'
+
+export const fetchLoggedInUser = createAsyncThunk("profile/fetchLoggedInUser", async(loggedInUserToken)=> {
+  const res = await axios.get('https://felicidad-api.herokuapp.com/users/', { headers: { Authorization: loggedInUserToken } })
+  return res.data
+})
 
 const profileSlice = createSlice({
   name: 'profile',
   initialState: {
-    user: "",
+    loggedInUser: null,
     status: 'idle',
+    error: null
   },
   reducers: {
     setUser: (state, action) => {
-      return { ...state, user: action.payload }
-    },
-    addToFollowing: (state, action) => {
-      return {...state, user: {...state.user, following: [...state.user.following, action.payload]}}
-    },
-    removeFromFollowing: (state, action) => {
-      return {...state, user: {...state.user, following: state.user.following.filter(user => user !== action.payload)}}
-    },
-    updateName: (state, action) => {
-      return (state.user.name = action.payload)
+      return { ...state, loggedInuser: action.payload }
     },
   },
+  extraReducers: {
+    [fetchLoggedInUser.pending]: (state, action) => {
+      state.status = "pending"
+    },
+    [fetchLoggedInUser.fulfilled]: (state, action) => {
+      state.loggedInUser = action.payload.user
+      state.status = "fullfilled"
+    },
+    [fetchLoggedInUser.error]: (state, action) => {
+      state.error = action.error.message
+      state.status = "error"
+    },
+  }
 })
-export const { setUser, addToFollowing, removeFromFollowing, updateName } = profileSlice.actions
+export const { setUser } = profileSlice.actions
 
 export default profileSlice.reducer
