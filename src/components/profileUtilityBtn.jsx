@@ -9,7 +9,7 @@ export const ProfileUtilityBtn = (props) => {
         style={{ display: props.displayFollow }}
         className="profileUtilityBtn"
       >
-        Follow
+        {props.utilityBtnName}
       </button>
       <Link to={props.editBtnClicked}>
         <button

@@ -3,7 +3,6 @@ import './styles/loginSignupBox.css'
 export const SignupBox = (props) => {
   return (
     <div>
-      <form>
         <input
           onChange={props.signupName}
           className="inputBox"
@@ -35,7 +34,6 @@ export const SignupBox = (props) => {
         <button onClick={props.signupBtnClick} className="loginBtn">
           Signup
         </button>
-      </form>
     </div>
   )
 }

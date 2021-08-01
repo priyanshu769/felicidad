@@ -1,7 +1,8 @@
 import { SignupBox } from '../../components/index'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { signupUser } from './authSlice'
 
 export const Signup = () => {
   const [name, setName] = useState('')
@@ -9,17 +10,23 @@ export const Signup = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [displayMessage, setDisplayMessage] = useState("")
-  const usersList = useSelector(state => state.auth.usersList)
-  const signupBtnClicked = () => {
-    usersList.push({
-      username: username,
-      password: password,
-      name: name,
-      email: email
-    })
-    setDisplayMessage("Now you can Login.")
-    console.log(usersList)
+  const authState = useSelector(state => state.auth)
+  const dispatch = useDispatch()
+
+  const signupHandler = async() =>{
+    try{
+      if (authState.status === 'Logged Out' || 'Error Logging In'){
+        dispatch(signupUser({
+          username: username,
+          password: password,
+          name: name,
+          email: email
+        }))
+      }
+    }catch(error){
+      console.log(error)
   }
+}
   return (
     <div>
       <SignupBox
@@ -27,7 +34,7 @@ export const Signup = () => {
         signupUsername={(e) => setUsername(e.target.value)}
         signupEmail={(e)=> setEmail(e.target.value)}
         signupPassword={(e)=> setPassword(e.target.value)}
-        signupBtnClick={signupBtnClicked}
+        signupBtnClick={signupHandler}
       />
       <p>{displayMessage}</p>
       <p>

@@ -1,5 +1,5 @@
 import './App.css'
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route, NavLink } from 'react-router-dom'
 import {
   Timeline,
   Profile,
@@ -15,60 +15,74 @@ import {
   ReversePrivateRoute,
 } from './components/index'
 import { useSelector, useDispatch } from 'react-redux'
-import { setUser, fetchLoggedInUser } from './features/profile/profileSlice'
+import {
+  setUser,
+  fetchLoggedInUser,
+  setProfileStatus,
+  setProfileError,
+} from './features/profile/profileSlice'
 import { setLoggedInToken } from './features/auth/authSlice'
 import { fetchPosts } from './features/timeline/timelineSlice'
 import { useEffect } from 'react'
 
 function App() {
-  const {loggedInToken} = useSelector((state) => state.auth)
-  const {loggedInUser, status} = useSelector((state) => state.profile)
+  const { loggedInToken } = useSelector((state) => state.auth)
+  const { loggedInUser, status } = useSelector((state) => state.profile)
   const timeline = useSelector((state) => state.timeline)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const dataFromLocalStorage = JSON.parse(localStorage?.getItem('loggedInToken'))
+    const dataFromLocalStorage = JSON.parse(
+      localStorage?.getItem('loggedInToken'),
+    )
     const token = dataFromLocalStorage?.token
     if (token) {
-      console.log("triggered, setLoggedInToken")
       dispatch(setLoggedInToken(token))
     }
   }, [dispatch])
-  
-  useEffect(()=> {
-    (async()=> {
-      if (loggedInToken && status === "idle"){
-        console.log("triggered, fetchLoggedInUser")
+
+  useEffect(() => {
+    ;(async () => {
+      if (loggedInToken && status === 'idle') {
+        console.log('triggered, fetchLoggedInUser')
         dispatch(fetchLoggedInUser(loggedInToken))
       }
     })()
-  }, [dispatch, loggedInToken])
+  }, [dispatch, loggedInToken, status])
 
   useEffect(() => {
-      if (loggedInToken && timeline.status === 'idle'){
-        console.log("triggered, fetchPosts")
-        dispatch(fetchPosts())
-      }
+    if (loggedInToken && timeline.status === 'idle') {
+      console.log('triggered, fetchPosts')
+      dispatch(fetchPosts())
+    }
   }, [dispatch, timeline.status, loggedInToken])
-  
+
+  const logoutHandler = () => {
+    dispatch(setUser(null))
+    dispatch(setProfileStatus('idle'))
+    dispatch(setProfileError(null))
+    localStorage.removeItem('loggedInToken')
+    dispatch(setLoggedInToken(null))
+  }
+
+  console.log(loggedInToken)
+  console.log(loggedInUser)
+
   return (
     <div className="App">
       <div style={{ display: loggedInToken ? 'block' : 'none' }}>
-        <Link to="/">Home</Link>
-        <Link to={`/${loggedInUser?.username}`}>Profile</Link>
-        <button
-          onClick={() => {
-            dispatch(setUser(null))
-            dispatch(setLoggedInToken(null))
-            localStorage.removeItem('loggedInToken')
-          }}
-        >
-          Logout
-        </button>
+        <NavLink to="/">Home</NavLink>
+        <NavLink to={`/${loggedInUser?.username}`}>Profile</NavLink>
+        <button onClick={() => logoutHandler()}>Logout</button>
       </div>
       <Routes>
-        <DoublePrivateRoute login={loggedInToken} element={<Timeline />} path="/" />
-        <Route
+        <DoublePrivateRoute
+          login={loggedInToken}
+          element={<Timeline />}
+          path="/"
+        />
+        <PrivateRoute
+          login={loggedInToken}
           path="/:username"
           element={<Profile />}
         />
@@ -93,11 +107,6 @@ function App() {
           element={<Signup />}
         />
         <Route path="*" element={<PageNotFound />} />
-        {/*<Route path="/" element={<Timeline />} />
-        <Route path="/:username" element={<Profile />} />
-        <Route path="/:username/following" element={<Followers />} />
-        <Route path="/:username/followers" element={<Following />} />
-        <Route path="/signup" element={<Signup />} />*/}
       </Routes>
     </div>
   )

@@ -17,6 +17,7 @@ export const Profile = () => {
   const [userToShow, setUserToShow] = useState({})
   const [userPosts, setUserPosts] = useState([])
   const [newPostText, setNewPostText] = useState('')
+  const [connectionMsg, setConnectionMsg] = useState(null)
   const allPosts = useSelector(state => state.timeline.posts)
   const dispatch = useDispatch()
 
@@ -41,6 +42,31 @@ export const Profile = () => {
     }
   }
 
+  const followBtnHandler = async(userToFollow) => {
+    console.log(userToFollow._id)
+    if (loggedInUser.following.includes(userToFollow._id)){
+      console.log("profile Page follow Btn triggered")
+      try{
+        const unfollowUser = await axios.get(`https://felicidad-api.herokuapp.com/users/${userToFollow._id}/unfollow`, { headers: { Authorization: loggedInUserToken } })
+        console.log(unfollowUser)
+        setConnectionMsg(unfollowUser.message) 
+      }catch(error){
+        setConnectionMsg(error) 
+        console.log(error)
+      }
+    } else {
+      console.log("profile Page follow Btn triggered")
+      try{
+          const followUser = await axios.get(`https://felicidad-api.herokuapp.com/users/${userToFollow._id}/follow`, { headers: { Authorization: loggedInUserToken } })
+          console.log(followUser)
+          setConnectionMsg(followUser.message) 
+        }catch(error){
+          setConnectionMsg(error.message) 
+          console.log(error)
+      }
+    }
+  }
+
   useEffect(()=> {
     if (username === loggedInUser?.username){
       const userPosts = allPosts.filter(post => post.user.username === username)
@@ -55,6 +81,7 @@ export const Profile = () => {
       })()
     }
   }, [dispatch, loggedInUser, loggedInUserToken, username, allPosts])
+
   return (
     <div>
       <ProfileDetail
@@ -68,7 +95,8 @@ export const Profile = () => {
       <ProfileUtilityBtn
         displayFollow={username !== loggedInUser?.username ? 'block' : 'none'}
         displayEdit={username === loggedInUser?.username ? 'block' : 'none'}
-        // followBtnClicked={}
+        utilityBtnName={loggedInUser.following.includes(userToShow._id) ? "Following" : "Follow"}
+        followBtnClicked={()=>followBtnHandler(userToShow)}
         editBtnClicked={`/${loggedInUser?.username}/edit`}
       />
       <NewPost

@@ -13,8 +13,8 @@ export const FollowerCard = (props) => {
           src="https://bit.ly/3xfZmSW"
         />
       </div>
-      <Link to={`/${props.user}`}>
-        <h3 className="followerName">{props.user}</h3>
+      <Link to={`/${props.username}`}>
+        <h3 className="followerName">{props.username}</h3>
       </Link>
       <div style={{display: props.folowerCardBtnDisplay}}>
         <button

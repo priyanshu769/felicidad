@@ -5,6 +5,6 @@ export const DoublePrivateRoute = ({ path, login, ...props }) => {
   return login ? (
     <Route {...props} path={path} />
   ) : (
-    <Route {...props} element={<Login />} />
+    <Route {...props} path="/" element={<Login />} />
   )
 }
