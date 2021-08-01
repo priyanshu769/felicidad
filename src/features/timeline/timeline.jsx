@@ -1,15 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Post, NewPost } from '../../components/index'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
-import { fetchPosts } from './timelineSlice'
-import { setUser } from '../profile/profileSlice'
+import { addPost } from './timelineSlice'
 
 export const Timeline = () => {
   const loggedInUser = useSelector((state) => state.profile.loggedInUser)
   const timeline = useSelector((state) => state.timeline)
-  const dispatch = useDispatch()
   const [newPostText, setNewPostText] = useState('')
+  const dispatch = useDispatch()
 
   const newPost = () => {
     return {caption: newPostText,
@@ -20,6 +19,17 @@ export const Timeline = () => {
     }}
   }
 
+  const addPostHandler = async (newPost) => {
+    try{
+      const postAdded = await axios.post("https://felicidad-api.herokuapp.com/posts/", newPost)
+      if(postAdded.data.success){
+        dispatch(addPost(postAdded.data.postAdded))
+      }
+    } catch(error){
+      console.log(error)
+    }
+  }
+
   return (
     <div>
       <NewPost
@@ -27,7 +37,7 @@ export const Timeline = () => {
         onChangeTextArea={(e) => setNewPostText(e.target.value)}
         totalCharacters={`${newPostText.length}/240`}
         onPostBtnClick={() => {
-        {/*dispatch(addPost(newPost()))*/}
+          addPostHandler(newPost())
           setNewPostText('')
         }}
       />

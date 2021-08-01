@@ -1,8 +1,8 @@
 import { LoginBox } from '../../components/index'
 import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginUser, setLoggedInToken } from './authSlice'
+import { loginUser } from './authSlice'
 
 export const Login = () => {
   const [username, setUsername] = useState('')
@@ -22,9 +22,7 @@ export const Login = () => {
       <LoginBox
         usernameText={(e) => setUsername(e.target.value)}
         passwordText={(e) => setPassword(e.target.value)}
-        loginBtnClick={() =>
-          loginHandler({ username: username, password: password })
-        }
+        loginBtnClick={() => loginHandler({ username: username, password: password })}
       />
       <p>{displayMsg}</p>
       <p>

@@ -16,6 +16,9 @@ const timelineSlice = createSlice({
   name: 'timeline',
   initialState,
   reducers: {
+    addPost: (state, action)=>{
+      return {...state, posts: [...state.posts, action.payload]}
+    }
   },
   extraReducers: {
     [fetchPosts.pending]: (state, action) => {
@@ -32,6 +35,6 @@ const timelineSlice = createSlice({
   }
 })
 
-// export const {  } = timelineSlice.actions
+export const { addPost } = timelineSlice.actions
 
 export default timelineSlice.reducer
