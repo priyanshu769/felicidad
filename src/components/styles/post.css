@@ -1,5 +1,5 @@
 .postContainer {
-    max-width: 22rem;
+    width: 22rem;
     padding: 0.5rem;
     margin: 0;
     margin-bottom: 0.5rem;
@@ -12,7 +12,7 @@
 }
 
 .postAuthorImgContainer {
-    max-width: 3rem;
+    width: 3rem;
 }
 
 .postAuthorImg {
@@ -21,7 +21,7 @@
 }
 
 .postAuthorName {
-    padding: 0 0 0 1rem;
+    padding-left: 1rem;
 }
 
 .postActionIconBtn {

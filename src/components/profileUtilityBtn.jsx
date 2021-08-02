@@ -11,7 +11,7 @@ export const ProfileUtilityBtn = (props) => {
       >
         {props.utilityBtnName}
       </button>
-      <Link to={props.editBtnClicked}>
+      <Link className="navLink" to={props.editBtnClicked}>
         <button
           style={{ display: props.displayEdit }}
           className="profileUtilityBtn"
