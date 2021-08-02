@@ -9,34 +9,38 @@ export const Signup = () => {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [displayMessage, setDisplayMessage] = useState("")
-  const authState = useSelector(state => state.auth)
+  const [displayMessage, setDisplayMessage] = useState('')
+  const authState = useSelector((state) => state.auth)
   const dispatch = useDispatch()
 
-  const signupHandler = async() =>{
-    try{
-      if (authState.status === 'Logged Out' || 'Error Logging In'){
-        dispatch(signupUser({
-          username: username,
-          password: password,
-          name: name,
-          email: email
-        }))
+  const signupHandler = async () => {
+    try {
+      if (authState.status === 'Logged Out' || 'Error Logging In') {
+        setDisplayMessage('Signing Up')
+        dispatch(
+          signupUser({
+            username: username,
+            password: password,
+            name: name,
+            email: email,
+          }),
+        )
       }
-    }catch(error){
+    } catch (error) {
+      setDisplayMessage('Some error occured, try again or later')
       console.log(error)
+    }
   }
-}
   return (
     <div>
+      {displayMessage && <h3>{displayMessage}</h3>}
       <SignupBox
         signupName={(e) => setName(e.target.value)}
         signupUsername={(e) => setUsername(e.target.value)}
-        signupEmail={(e)=> setEmail(e.target.value)}
-        signupPassword={(e)=> setPassword(e.target.value)}
+        signupEmail={(e) => setEmail(e.target.value)}
+        signupPassword={(e) => setPassword(e.target.value)}
         signupBtnClick={signupHandler}
       />
-      <p>{displayMessage}</p>
       <p>
         Already have an account? <Link to="/">Login</Link>.
       </p>

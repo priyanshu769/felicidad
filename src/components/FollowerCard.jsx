@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './styles/followerCard.css'
 
-
 export const FollowerCard = (props) => {
   return (
     <div className="followerCredentials">
@@ -16,7 +15,7 @@ export const FollowerCard = (props) => {
       <Link to={`/${props.username}`}>
         <h3 className="followerName">{props.username}</h3>
       </Link>
-      <div style={{display: props.folowerCardBtnDisplay}}>
+      <div style={{ display: props.folowerCardBtnDisplay }}>
         <button
           onClick={props.followerCardBtnClick}
           className="followerCardActionBtn"

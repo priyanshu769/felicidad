@@ -11,21 +11,26 @@ export const Timeline = () => {
   const dispatch = useDispatch()
 
   const newPost = () => {
-    return {caption: newPostText,
-    likes: 0,
-    user: {
-      userId: loggedInUser?._id,
-      username: loggedInUser.username,
-    }}
+    return {
+      caption: newPostText,
+      likes: 0,
+      user: {
+        userId: loggedInUser?._id,
+        username: loggedInUser.username,
+      },
+    }
   }
 
   const addPostHandler = async (newPost) => {
-    try{
-      const postAdded = await axios.post("https://felicidad-api.herokuapp.com/posts/", newPost)
-      if(postAdded.data.success){
+    try {
+      const postAdded = await axios.post(
+        'https://felicidad-api.herokuapp.com/posts/',
+        newPost,
+      )
+      if (postAdded.data.success) {
         dispatch(addPost(postAdded.data.postAdded))
       }
-    } catch(error){
+    } catch (error) {
       console.log(error)
     }
   }
@@ -41,18 +46,21 @@ export const Timeline = () => {
           setNewPostText('')
         }}
       />
-      {timeline.status==="loading" && <h2>Loading...</h2>}
-      {timeline.status==="error" && <h2 style={{color: "red"}}>Some error occured...</h2>}
-      {timeline.status==="fullfilled" && timeline.posts.map((post) => {
-        return (
-          <Post
-            authorName={post.user.username}
-            postText={post.caption}
-            postLikes={post.likes}
-            // onLikeBtnClick={() => dispatch(likeBtnClicked(post._postID))}
-          />
-        )
-      })}
+      {timeline.status === 'loading' && <h2>Loading...</h2>}
+      {timeline.status === 'error' && (
+        <h2 style={{ color: 'red' }}>Some error occured...</h2>
+      )}
+      {timeline.status === 'fullfilled' &&
+        timeline.posts.map((post) => {
+          return (
+            <Post
+              authorName={post.user.username}
+              postText={post.caption}
+              postLikes={post.likes}
+              // onLikeBtnClick={() => dispatch(likeBtnClicked(post._postID))}
+            />
+          )
+        })}
     </div>
   )
 }

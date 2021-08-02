@@ -31,27 +31,33 @@ export const Followers = () => {
     })()
   }, [loggedInUserToken, username])
 
-  const followBtnHandler = async(userToFollow) => {
+  const followBtnHandler = async (userToFollow) => {
     console.log(userToFollow)
-    if (loggedInUser.following.includes(userToFollow._id)){
-      console.log("followers Page follow Btn triggered")
-      try{
-        const unfollowUser = await axios.get(`https://felicidad-api.herokuapp.com/users/${userToFollow._id}/unfollow`, { headers: { Authorization: loggedInUserToken } })
+    if (loggedInUser.following.includes(userToFollow._id)) {
+      console.log('followers Page follow Btn triggered')
+      try {
+        const unfollowUser = await axios.get(
+          `https://felicidad-api.herokuapp.com/users/${userToFollow._id}/unfollow`,
+          { headers: { Authorization: loggedInUserToken } },
+        )
         console.log(unfollowUser)
-        setConnectionMsg(unfollowUser.message) 
-      }catch(error){
-        setConnectionMsg(error.message) 
+        setConnectionMsg(unfollowUser.message)
+      } catch (error) {
+        setConnectionMsg(error.message)
         console.log(error)
       }
     } else {
-        console.log("followers Page follow Btn triggered")
-        try{
-          const followUser = await axios.get(`https://felicidad-api.herokuapp.com/users/${userToFollow._id}/follow`, { headers: { Authorization: loggedInUserToken } })
-          console.log(followUser)
-          setConnectionMsg(followUser.message) 
-        }catch(error){
-          setConnectionMsg(error.message) 
-          console.log(error)
+      console.log('followers Page follow Btn triggered')
+      try {
+        const followUser = await axios.get(
+          `https://felicidad-api.herokuapp.com/users/${userToFollow._id}/follow`,
+          { headers: { Authorization: loggedInUserToken } },
+        )
+        console.log(followUser)
+        setConnectionMsg(followUser.message)
+      } catch (error) {
+        setConnectionMsg(error.message)
+        console.log(error)
       }
     }
   }
@@ -70,14 +76,16 @@ export const Followers = () => {
             <FollowerCard
               username={followerUser.username}
               folowerCardBtnDisplay={
-                loggedInUser.username === followerUser.username ? 'none' : 'block'
+                loggedInUser.username === followerUser.username
+                  ? 'none'
+                  : 'block'
               }
               btnName={
                 loggedInUser.following.includes(followerUser._id)
                   ? 'Following'
                   : 'Follow'
               }
-              followerCardBtnClick={()=> followBtnHandler(followerUser)}
+              followerCardBtnClick={() => followBtnHandler(followerUser)}
             />
           )
         })}

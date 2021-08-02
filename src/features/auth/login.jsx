@@ -13,18 +13,21 @@ export const Login = () => {
 
   const loginHandler = (username, password) => {
     if (authState.status === 'Logged Out' || 'Error Logging In') {
+      setDisplayMsg('Logging In')
       dispatch(loginUser(username, password))
     }
   }
 
   return (
     <div>
+      {displayMsg && <h3>{displayMsg}</h3>}
       <LoginBox
         usernameText={(e) => setUsername(e.target.value)}
         passwordText={(e) => setPassword(e.target.value)}
-        loginBtnClick={() => loginHandler({ username: username, password: password })}
+        loginBtnClick={() =>
+          loginHandler({ username: username, password: password })
+        }
       />
-      <p>{displayMsg}</p>
       <p>
         Don't have an account? <Link to="/signup">Create One</Link>.
       </p>

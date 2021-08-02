@@ -12,78 +12,96 @@ import { addPost } from '../timeline/timelineSlice'
 
 export const Profile = () => {
   const { username } = useParams()
-  const loggedInUserToken = useSelector(state => state.auth.loggedInToken)
-  const loggedInUser = useSelector(state => state.profile.loggedInUser)
+  const loggedInUserToken = useSelector((state) => state.auth.loggedInToken)
+  const loggedInUser = useSelector((state) => state.profile.loggedInUser)
   const [userToShow, setUserToShow] = useState({})
   const [userPosts, setUserPosts] = useState([])
   const [newPostText, setNewPostText] = useState('')
   const [connectionMsg, setConnectionMsg] = useState(null)
-  const allPosts = useSelector(state => state.timeline.posts)
+  const allPosts = useSelector((state) => state.timeline.posts)
   const dispatch = useDispatch()
 
-  const newPost = ()=> {
+  const newPost = () => {
     return {
-    caption: newPostText,
-    likes: 0,
-    user: {
-      userId: loggedInUser?.userID,
-      username: loggedInUser?.username,
+      caption: newPostText,
+      likes: 0,
+      user: {
+        userId: loggedInUser?.userID,
+        username: loggedInUser?.username,
+      },
     }
-  }}
+  }
 
   const addPostHandler = async (newPost) => {
-    try{
-      const postAdded = await axios.post("https://felicidad-api.herokuapp.com/posts/", newPost)
-      if(postAdded.data.success){
+    try {
+      const postAdded = await axios.post(
+        'https://felicidad-api.herokuapp.com/posts/',
+        newPost,
+      )
+      if (postAdded.data.success) {
         dispatch(addPost(postAdded.data.postAdded))
       }
-    } catch(error){
+    } catch (error) {
       console.log(error)
     }
   }
 
-  const followBtnHandler = async(userToFollow) => {
+  const followBtnHandler = async (userToFollow) => {
     console.log(userToFollow._id)
-    if (loggedInUser.following.includes(userToFollow._id)){
-      console.log("profile Page follow Btn triggered")
-      try{
-        const unfollowUser = await axios.get(`https://felicidad-api.herokuapp.com/users/${userToFollow._id}/unfollow`, { headers: { Authorization: loggedInUserToken } })
+    if (loggedInUser.following.includes(userToFollow._id)) {
+      console.log('profile Page follow Btn triggered')
+      try {
+        const unfollowUser = await axios.get(
+          `https://felicidad-api.herokuapp.com/users/${userToFollow._id}/unfollow`,
+          { headers: { Authorization: loggedInUserToken } },
+        )
         console.log(unfollowUser)
-        setConnectionMsg(unfollowUser.message) 
-      }catch(error){
-        setConnectionMsg(error) 
+        setConnectionMsg(unfollowUser.message)
+      } catch (error) {
+        setConnectionMsg(error)
         console.log(error)
       }
     } else {
-      console.log("profile Page follow Btn triggered")
-      try{
-          const followUser = await axios.get(`https://felicidad-api.herokuapp.com/users/${userToFollow._id}/follow`, { headers: { Authorization: loggedInUserToken } })
-          console.log(followUser)
-          setConnectionMsg(followUser.message) 
-        }catch(error){
-          setConnectionMsg(error.message) 
-          console.log(error)
+      console.log('profile Page follow Btn triggered')
+      try {
+        const followUser = await axios.get(
+          `https://felicidad-api.herokuapp.com/users/${userToFollow._id}/follow`,
+          { headers: { Authorization: loggedInUserToken } },
+        )
+        console.log(followUser)
+        setConnectionMsg(followUser.message)
+      } catch (error) {
+        setConnectionMsg(error.message)
+        console.log(error)
       }
     }
   }
 
-  useEffect(()=> {
-    if (username === loggedInUser?.username){
-      const userPosts = allPosts.filter(post => post.user.username === username)
-      setUserPosts(userPosts)
+  useEffect(() => {
+    if (username === loggedInUser?.username) {
+      const userPosts = allPosts.filter(
+        (post) => post.user.username === username,
+      )
+      setUserPosts(userPosts.reverse())
       return setUserToShow(loggedInUser)
     } else {
-      (async()=> {
-        const user = await axios.get(`https://felicidad-api.herokuapp.com/users/u/${username}`, { headers: { Authorization: loggedInUserToken } })
+      ;(async () => {
+        const user = await axios.get(
+          `https://felicidad-api.herokuapp.com/users/u/${username}`,
+          { headers: { Authorization: loggedInUserToken } },
+        )
         setUserToShow(user.data.restUserData)
-        const userPosts = allPosts.filter(post => post.user.username === username)
-      setUserPosts(userPosts)
+        const userPosts = allPosts.filter(
+          (post) => post.user.username === username,
+        )
+        setUserPosts(userPosts.reverse())
       })()
     }
   }, [dispatch, loggedInUser, loggedInUserToken, username, allPosts])
 
   return (
     <div>
+      {connectionMsg && <h3>{connectionMsg}</h3>}
       <ProfileDetail
         name={userToShow?.name}
         followingNumbers={userToShow?.following?.length}
@@ -95,8 +113,12 @@ export const Profile = () => {
       <ProfileUtilityBtn
         displayFollow={username !== loggedInUser?.username ? 'block' : 'none'}
         displayEdit={username === loggedInUser?.username ? 'block' : 'none'}
-        utilityBtnName={loggedInUser.following.includes(userToShow._id) ? "Following" : "Follow"}
-        followBtnClicked={()=>followBtnHandler(userToShow)}
+        utilityBtnName={
+          loggedInUser.following.includes(userToShow._id)
+            ? 'Following'
+            : 'Follow'
+        }
+        followBtnClicked={() => followBtnHandler(userToShow)}
         editBtnClicked={`/${loggedInUser?.username}/edit`}
       />
       <NewPost
@@ -112,15 +134,15 @@ export const Profile = () => {
       {userPosts.length === 0
         ? 'Zero posts to show.'
         : userPosts.map((post) => {
-              return (
-                <Post
-                  authorName={post.user.username}
-                  postText={post.caption}
-                  postLikes={post.likes}
-                  // onLikeBtnClick={() => dispatch(likeBtnClicked(post._postID))}
-                />
-              )
-            })}
+            return (
+              <Post
+                authorName={post.user.username}
+                postText={post.caption}
+                postLikes={post.likes}
+                // onLikeBtnClick={() => dispatch(likeBtnClicked(post._postID))}
+              />
+            )
+          })}
     </div>
   )
 }

@@ -46,7 +46,7 @@ const profileSlice = createSlice({
 export const {
   setUser,
   setProfileError,
-  setProfileStatus
+  setProfileStatus,
 } = profileSlice.actions
 
 export default profileSlice.reducer

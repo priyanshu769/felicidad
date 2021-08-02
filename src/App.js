@@ -30,7 +30,6 @@ function App() {
   const { loggedInUser, status } = useSelector((state) => state.profile)
   const timeline = useSelector((state) => state.timeline)
   const dispatch = useDispatch()
-
   useEffect(() => {
     const dataFromLocalStorage = JSON.parse(
       localStorage?.getItem('loggedInToken'),
@@ -44,7 +43,6 @@ function App() {
   useEffect(() => {
     ;(async () => {
       if (loggedInToken && status === 'idle') {
-        console.log('triggered, fetchLoggedInUser')
         dispatch(fetchLoggedInUser(loggedInToken))
       }
     })()
@@ -52,7 +50,6 @@ function App() {
 
   useEffect(() => {
     if (loggedInToken && timeline.status === 'idle') {
-      console.log('triggered, fetchPosts')
       dispatch(fetchPosts())
     }
   }, [dispatch, timeline.status, loggedInToken])
@@ -65,15 +62,12 @@ function App() {
     dispatch(setLoggedInToken(null))
   }
 
-  console.log(loggedInToken)
-  console.log(loggedInUser)
-
   return (
     <div className="App">
       <div style={{ display: loggedInToken ? 'block' : 'none' }}>
         <NavLink to="/">Home</NavLink>
         <NavLink to={`/${loggedInUser?.username}`}>Profile</NavLink>
-        <button onClick={() => logoutHandler()}>Logout</button>
+        <button onClick={logoutHandler}>Logout</button>
       </div>
       <Routes>
         <DoublePrivateRoute

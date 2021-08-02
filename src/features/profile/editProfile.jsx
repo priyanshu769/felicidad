@@ -1,13 +1,98 @@
-import { useSelector, useDispatch } from 'react-redux'
-import { useParams } from 'react-router'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router'
+import { fetchLoggedInUser } from './profileSlice'
 
 export const EditProfile = () => {
-  const { username } = useParams()
+  const userLoggedIn = useSelector((state) => state.profile.loggedInUser)
+  const userLoggedInToken = useSelector((state) => state.auth.loggedInToken)
+  const [name, setName] = useState('')
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
+  const [bio, setBio] = useState('')
+  const [password, setPassword] = useState('')
+  const [savedMessage, setSavedMessage] = useState(null)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (userLoggedIn) {
+      userLoggedIn?.name && setName(userLoggedIn.name)
+      userLoggedIn?.username && setUsername(userLoggedIn.username)
+      userLoggedIn?.email && setEmail(userLoggedIn.email)
+      userLoggedIn?.bio && setBio(userLoggedIn.bio)
+    }
+  }, [userLoggedIn])
+
+  const editedProfile = () => {
+    return {
+      username: username,
+      name: name,
+      email: email,
+      bio: bio,
+      password: password
+    }
+  }
+
+  const saveEditedProfile = async (editedProfile) => {
+    try {
+      setSavedMessage('Updating Profile...')
+      const saveProfile = await axios.post(
+        `http://felicidad-api.herokuapp.com/users/${userLoggedIn._id}`,
+        editedProfile,
+        { headers: { Authorization: userLoggedInToken } },
+      )
+      if (saveProfile.data.success) {
+        setSavedMessage('Profile Updated!')
+        dispatch(fetchLoggedInUser(userLoggedInToken))
+        navigate(`/${userLoggedIn.username}`)
+      }
+    } catch (error) {
+      setSavedMessage('Some Error Occured...')
+      console.log(error)
+    }
+  }
   return (
     <div>
-      {/*<p>Name: <input  /></p>
-        <p>Username: <input /></p>
-        <p>Bio: <input /></p>*/}
+      {savedMessage && <h3>{savedMessage}</h3>}
+      <p>
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Name"
+        />
+      </p>
+      <p>
+        <input
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Username"
+        />
+      </p>
+      <p>
+        <input
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+        />
+      </p>
+      <p>
+        <input
+          value={bio}
+          onChange={(e) => setBio(e.target.value)}
+          placeholder="Bio"
+        />
+      </p>
+      <p>
+        <input
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+        />
+      </p>
+      <button onClick={() => saveEditedProfile(editedProfile())}>Save</button>
+      {/*Add a change password route here.*/}
     </div>
   )
 }
