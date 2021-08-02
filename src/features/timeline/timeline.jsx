@@ -40,7 +40,7 @@ export const Timeline = () => {
       <NewPost
         newPostValue={newPostText}
         onChangeTextArea={(e) => setNewPostText(e.target.value)}
-        totalCharacters={`${newPostText.length}/240`}
+        totalCharacters={newPostText.length}
         onPostBtnClick={() => {
           addPostHandler(newPost())
           setNewPostText('')

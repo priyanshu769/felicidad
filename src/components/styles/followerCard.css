@@ -3,7 +3,7 @@
 }
 
 .followerImgContainer {
-  width: 3rem;
+  max-width: 3rem;
 }
 
 .followerImg {
@@ -19,7 +19,6 @@
   border: 3px solid black;
   border-radius: 0.5rem;
   background: none;
-  padding: 0.5;
   width: 7rem;
   margin-top: 1rem;
   cursor: pointer;

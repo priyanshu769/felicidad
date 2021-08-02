@@ -1,9 +1,10 @@
 .newPostName {
-    width: 25rem;
+    max-width: 23rem;
+    margin: 0;
 }
 
 .newPostText {
-    width: 25rem;
+    width: 23rem;
     height: 7rem;
 }
 
@@ -13,7 +14,7 @@
 }
 
 .newPostBtn {
-    width: 3rem;
+    max-width: 3rem;
     border: none;
     background: none;
     font-size: 1.2rem;

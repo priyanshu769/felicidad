@@ -1,9 +1,18 @@
 .profileDetailsContainer {
+    max-width: 23rem;
     padding: 0.5rem;
 }
 
+.profilePicAndName{
+    display: flex;
+}
+
+.profileNameAndConnection{
+    margin-left: 2rem;
+}
+
 .profileImgContainer {
-    width: 10rem;
+    max-width: 7rem;
 }
 
 .profileImg {
@@ -16,13 +25,14 @@
     font-size: 1.5rem;
 }
 
+.profileBio {
+    max-width: 23rem;
+}
+
 .profileBtn {
     border: none;
     background: none;
     font-weight: bold;
     cursor: pointer;
-}
-
-.profileBio {
-    width: 25rem;
+    margin-left: -0.3rem;
 }

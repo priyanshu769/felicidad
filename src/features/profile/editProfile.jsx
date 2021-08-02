@@ -58,40 +58,50 @@ export const EditProfile = () => {
       {savedMessage && <h3>{savedMessage}</h3>}
       <p>
         <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Name"
+        className="inputBox"
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Name"
         />
-      </p>
-      <p>
+        </p>
+        <p>
         <input
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username"
+        className="inputBox"
+        type="text"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Username"
         />
-      </p>
-      <p>
+        </p>
+        <p>
         <input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
+        className="inputBox"
+        type="text"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
         />
-      </p>
-      <p>
+        </p>
+        <p>
         <input
-          value={bio}
-          onChange={(e) => setBio(e.target.value)}
-          placeholder="Bio"
+        className="inputBox"
+        type="text"
+        value={bio}
+        onChange={(e) => setBio(e.target.value)}
+        placeholder="Bio"
         />
-      </p>
-      <p>
+        </p>
+        <p>
         <input
-          value={password}
+        className="inputBox"
+        type="password"
+        value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
-        />
+          />
       </p>
-      <button onClick={() => saveEditedProfile(editedProfile())}>Save</button>
+      <button className="loginBtn" onClick={() => saveEditedProfile(editedProfile())}>Save</button>
       {/*Add a change password route here.*/}
     </div>
   )

@@ -14,21 +14,21 @@ export const SignupBox = (props) => {
           onChange={props.signupUsername}
           className="inputBox"
           type="text"
-          placeholder="username"
+          placeholder="Username"
         />
         <br />
         <input
           onChange={props.signupEmail}
           className="inputBox"
           type="text"
-          placeholder="email"
+          placeholder="Email"
         />
         <br />
         <input
           onChange={props.signupPassword}
           className="inputBox"
           type="password"
-          placeholder="password"
+          placeholder="Password"
         />
         <br />
         <button onClick={props.signupBtnClick} className="loginBtn">

@@ -7,7 +7,7 @@ export const NewPost = (props) => {
         <textarea value={props.newPostValue} onChange={props.onChangeTextArea} placeholder="What's happening?" className="newPostText"></textarea>
       </div>
       <div className="newPostActionBtnContainer">
-        <span>{props.totalCharacters}</span>
+        <p>{props.totalCharacters}</p>
         <button onClick={props.onPostBtnClick} className="newPostBtn">Post</button>
       </div>
     </div>

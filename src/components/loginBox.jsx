@@ -5,16 +5,16 @@ export const LoginBox = (props) => {
     <div>
         <input
           onChange={props.usernameText}
-          className="inputUsername"
+          className="inputBox"
           type="text"
-          placeholder="username"
+          placeholder="Username"
         />
         <br />
         <input
           onChange={props.passwordText}
-          className="inputPassword"
-          type="text"
-          placeholder="password"
+          className="inputBox"
+          type="password"
+          placeholder="Password"
         />
         <br />
         <button

@@ -125,7 +125,7 @@ export const Profile = () => {
         displayNewPost={username === loggedInUser?.username ? 'block' : 'none'}
         newPostValue={newPostText}
         onChangeTextArea={(e) => setNewPostText(e.target.value)}
-        totalCharacters={`${newPostText.length}/240`}
+        totalCharacters={newPostText.length}
         onPostBtnClick={() => {
           addPostHandler(newPost())
           setNewPostText('')
