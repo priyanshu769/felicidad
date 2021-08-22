@@ -1,4 +1,4 @@
-import { LoginBox } from '../../components/index'
+import { LoginBox } from '../../components'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'

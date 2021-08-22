@@ -1,4 +1,4 @@
-import { SignupBox } from '../../components/index'
+import { SignupBox } from '../../components'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'

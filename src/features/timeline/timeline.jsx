@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Post, NewPost } from '../../components/index'
+import { Post, NewPost } from '../../components'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { addPost } from './timelineSlice'

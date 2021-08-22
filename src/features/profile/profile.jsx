@@ -4,7 +4,7 @@ import {
   ProfileDetail,
   Post,
   ProfileUtilityBtn,
-} from '../../components/index'
+} from '../../components'
 import { useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
