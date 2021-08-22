@@ -25,10 +25,7 @@ export const Profile = () => {
     return {
       caption: newPostText,
       likes: 0,
-      user: {
-        userId: loggedInUser?.userID,
-        username: loggedInUser?.username,
-      },
+      user: loggedInUser?._id
     }
   }
 

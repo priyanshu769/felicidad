@@ -74,6 +74,7 @@ export const Following = () => {
         following.map((followingUser) => {
           return (
             <FollowerCard
+            avatarImg={followingUser.profilePic}
               username={followingUser.username}
               folowerCardBtnDisplay={
                 loggedInUser.username === followingUser.username

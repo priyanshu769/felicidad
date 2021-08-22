@@ -1,5 +1,6 @@
 import './styles/Utility.css'
 import './styles/Post.css'
+import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faShareAlt } from '@fortawesome/free-solid-svg-icons'
 
@@ -8,9 +9,11 @@ export const Post = (props) => {
     <div className="postContainer">
       <div className="postAuthorCredentials">
         <div className="imgAvatarSmContainer">
-          <img alt="profile" className="imgAvatar" src={props.avatarImg ? props.avatarImg : "https://bit.ly/3xfZmSW"} />
+          <img alt="profile" className="imgAvatar" src={props.avatarImg ? props.avatarImg : "https://bit.ly/2Wg4Dg2"} />
         </div>
+        <Link className="usernameLink" to={`/${props.authorName}`}>
         <p className="username usernamePost">@{props.authorName}</p>
+        </Link>
       </div>
       <div className="post">
         <p className="postText">

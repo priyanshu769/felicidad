@@ -10,12 +10,12 @@ export const FollowerCard = (props) => {
         <img
           alt="profile"
           className="imgAvatar"
-          src="https://bit.ly/3xfZmSW"
+          src={props.avatarImg ? props.avatarImg : "https://bit.ly/2Wg4Dg2"}
         />
+        <Link className="usernameLink usernameFollowerCard" to={`/${props.username}`}>
+          <p className="username">@{props.username}</p>
+        </Link>
       </div>
-      <Link className="usernameLink" to={`/${props.username}`}>
-        <p className="username">@{props.username}</p>
-      </Link>
       <div style={{ display: props.folowerCardBtnDisplay }}>
         <button
           onClick={props.followerCardBtnClick}

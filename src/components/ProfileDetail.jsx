@@ -10,7 +10,7 @@ export const ProfileDetail = (props) => {
           <img
             alt="profile"
             className="imgAvatar"
-            src={props.avatarImg ? props.avatarImg : "https://bit.ly/3xfZmSW"}
+            src={props.avatarImg ? props.avatarImg : "https://bit.ly/2Wg4Dg2"}
           />
         </div>
         <div className="profileNameAndConnection">

@@ -1,16 +1,28 @@
 .followerCredentials {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 2px solid #000000;
-    margin: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid #000000;
+  margin: 1rem 0;
+}
+
+.imgAvatarSmContainer {
+  display: flex;
+}
+
+.usernameFollowerCard {
+  padding-left: 0.5rem;
 }
 
 .btnFollowerCard {
-    margin-top: 1rem;
+  margin-top: 1rem;
 }
 
-/* @media only screen and (min-width: 992px) {
-    .followerCredentials {
-      width: 30rem;
-    }
-  } */
+@media only screen and (min-width: 992px) {
+  .followerCredentials {
+    width: 30rem;
+  }
+  
+  .followerCredentials {
+    width: 30rem;
+  }
+}

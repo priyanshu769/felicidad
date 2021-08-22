@@ -14,10 +14,7 @@ export const Timeline = () => {
     return {
       caption: newPostText,
       likes: 0,
-      user: {
-        userId: loggedInUser?._id,
-        username: loggedInUser.username,
-      },
+      user: loggedInUser?._id
     }
   }
 
