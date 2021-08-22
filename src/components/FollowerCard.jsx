@@ -1,24 +1,25 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import './styles/followerCard.css'
+import './styles/Utility.css'
+import './styles/FollowerCard.css'
 
 export const FollowerCard = (props) => {
   return (
     <div className="followerCredentials">
-      <div className="followerImgContainer">
+      <div className="imgAvatarSmContainer">
         <img
           alt="profile"
-          className="followerImg"
+          className="imgAvatar"
           src="https://bit.ly/3xfZmSW"
         />
       </div>
-      <Link to={`/${props.username}`}>
-        <h3 className="followerName">{props.username}</h3>
+      <Link className="usernameLink" to={`/${props.username}`}>
+        <p className="username">@{props.username}</p>
       </Link>
       <div style={{ display: props.folowerCardBtnDisplay }}>
         <button
           onClick={props.followerCardBtnClick}
-          className="followerCardActionBtn"
+          className="btnTertiary btnFollowerCard"
         >
           {props.btnName}
         </button>

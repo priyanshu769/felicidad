@@ -1,4 +1,5 @@
-import './styles/newPost.css'
+import './styles/Utility.css'
+import './styles/NewPost.css'
 
 export const NewPost = (props) => {
   return (
@@ -8,7 +9,7 @@ export const NewPost = (props) => {
       </div>
       <div className="newPostActionBtnContainer">
         <p>{props.totalCharacters}</p>
-        <button onClick={props.onPostBtnClick} className="newPostBtn">Post</button>
+        <button onClick={props.onPostBtnClick} className="btnSecondary">Post</button>
       </div>
     </div>
   )

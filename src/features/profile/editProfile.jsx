@@ -58,7 +58,7 @@ export const EditProfile = () => {
       {savedMessage && <h3>{savedMessage}</h3>}
       <p>
         <input
-        className="inputBox"
+        className="inputOne"
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
@@ -67,7 +67,7 @@ export const EditProfile = () => {
         </p>
         <p>
         <input
-        className="inputBox"
+        className="inputOne"
         type="text"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
@@ -76,7 +76,7 @@ export const EditProfile = () => {
         </p>
         <p>
         <input
-        className="inputBox"
+        className="inputOne"
         type="text"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -85,7 +85,7 @@ export const EditProfile = () => {
         </p>
         <p>
         <input
-        className="inputBox"
+        className="inputOne"
         type="text"
         value={bio}
         onChange={(e) => setBio(e.target.value)}
@@ -94,14 +94,14 @@ export const EditProfile = () => {
         </p>
         <p>
         <input
-        className="inputBox"
+        className="inputOne"
         type="password"
         value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           />
       </p>
-      <button className="loginBtn" onClick={() => saveEditedProfile(editedProfile())}>Save</button>
+      <button className="btnPrimary btnLogin" onClick={() => saveEditedProfile(editedProfile())}>Save</button>
       {/*Add a change password route here.*/}
     </div>
   )

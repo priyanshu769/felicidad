@@ -1,22 +1,12 @@
-.newPost {
-    width: 22rem;
-    margin: 0;
-}
-
 .newPostText {
-    width: 22.5rem;
+    width: 100%;
     height: 7rem;
+    border: none;
+    resize: none;
 }
 
 .newPostActionBtnContainer {
+    margin-top: -1rem;
     display: flex;
     justify-content: space-between;
-}
-
-.newPostBtn {
-    width: 3rem;
-    border: none;
-    background: none;
-    font-size: 1.2rem;
-    cursor: pointer;
 }

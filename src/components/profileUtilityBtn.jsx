@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import './styles/profileUtilityBtn.css'
+import './styles/Utility.css'
 
 export const ProfileUtilityBtn = (props) => {
   return (
@@ -7,14 +7,14 @@ export const ProfileUtilityBtn = (props) => {
       <button
         onClick={props.followBtnClicked}
         style={{ display: props.displayFollow }}
-        className="profileUtilityBtn"
+        className="btnPrimary"
       >
         {props.utilityBtnName}
       </button>
       <Link className="navLink" to={props.editBtnClicked}>
         <button
           style={{ display: props.displayEdit }}
-          className="profileUtilityBtn"
+          className="btnPrimary"
         >
           Edit Profile
         </button>

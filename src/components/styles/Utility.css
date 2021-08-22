@@ -1,0 +1,55 @@
+.btnPrimary {
+    font-weight: bold;
+    background: none;
+    border: 2px solid #000000;
+    border-radius: 1rem;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+.btnSecondary {
+    background: none;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btnTertiary {
+    font-weight: bold;
+    background: none;
+    border: 2px solid #000000;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+.btnLogin {
+    margin-left: 0.5rem;
+}
+
+.imgAvatarSmContainer {
+    width: 3rem;
+}
+
+.imgAvataLgContainer {
+    width: 7rem;
+}
+
+.imgAvatar {
+    max-width: 100%;
+    border-radius: 100%;
+}
+
+.username {
+    font-weight: 500;
+}
+
+.usernameLink {
+    text-decoration: none;
+    color: #000000;
+}
+
+.inputOne {
+    width: 15rem;
+    padding: 0.5rem;
+    margin: 0.5rem;
+}

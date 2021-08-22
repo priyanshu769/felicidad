@@ -1,37 +1,37 @@
-import './styles/loginSignupBox.css'
+import './styles/Utility.css'
 
 export const SignupBox = (props) => {
   return (
     <div>
         <input
           onChange={props.signupName}
-          className="inputBox"
+          className="inputOne"
           type="text"
           placeholder="Name"
         />
         <br />
         <input
           onChange={props.signupUsername}
-          className="inputBox"
+          className="inputOne"
           type="text"
           placeholder="Username"
         />
         <br />
         <input
           onChange={props.signupEmail}
-          className="inputBox"
+          className="inputOne"
           type="text"
           placeholder="Email"
         />
         <br />
         <input
           onChange={props.signupPassword}
-          className="inputBox"
+          className="inputOne"
           type="password"
           placeholder="Password"
         />
         <br />
-        <button onClick={props.signupBtnClick} className="loginBtn">
+        <button onClick={props.signupBtnClick} className="btnPrimary btnLogin">
           Signup
         </button>
     </div>

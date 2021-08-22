@@ -1,25 +1,16 @@
 .followerCredentials {
-  display: flex;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid #000000;
+    margin: 1rem 0;
 }
 
-.followerImgContainer {
-  width: 3rem;
+.btnFollowerCard {
+    margin-top: 1rem;
 }
 
-.followerImg {
-  max-width: 100%;
-  border-radius: 100%;
-}
-
-.followerName {
-  padding: 0 1rem;
-}
-
-.followerCardActionBtn {
-  border: 3px solid black;
-  border-radius: 0.5rem;
-  background: none;
-  width: 7rem;
-  margin-top: 1rem;
-  cursor: pointer;
-}
+/* @media only screen and (min-width: 992px) {
+    .followerCredentials {
+      width: 30rem;
+    }
+  } */

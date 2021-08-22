@@ -54,6 +54,7 @@ export const Timeline = () => {
         timeline.posts.map((post) => {
           return (
             <Post
+              avatarImg={post.user.profilePic ? post.user.profilePic : null}
               authorName={post.user.username}
               postText={post.caption}
               postLikes={post.likes}

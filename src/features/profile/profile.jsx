@@ -103,6 +103,7 @@ export const Profile = () => {
     <div>
       {connectionMsg && <h3>{connectionMsg}</h3>}
       <ProfileDetail
+        avatarImg={userToShow.profilePic ? userToShow.profilePic : null}
         name={userToShow?.name}
         followingNumbers={userToShow?.following?.length}
         followersNumbers={userToShow?.followers?.length}
