@@ -1,4 +1,4 @@
-import './styles/Utility.css'
+import './styles/utility.css'
 
 export const SignupBox = (props) => {
   return (

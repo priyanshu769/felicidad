@@ -1,5 +1,5 @@
-import './styles/Utility.css'
-import './styles/ProfileDetail.css'
+import './styles/utility.css'
+import './styles/profileDetail.css'
 import { Link } from 'react-router-dom'
 
 export const ProfileDetail = (props) => {

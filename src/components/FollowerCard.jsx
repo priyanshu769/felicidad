@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import './styles/Utility.css'
-import './styles/FollowerCard.css'
+import './styles/utility.css'
+import './styles/followerCard.css'
 
 export const FollowerCard = (props) => {
   return (

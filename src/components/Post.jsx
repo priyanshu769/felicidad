@@ -1,5 +1,5 @@
-import './styles/Utility.css'
-import './styles/Post.css'
+import './styles/utility.css'
+import './styles/post.css'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faShareAlt } from '@fortawesome/free-solid-svg-icons'

@@ -1,5 +1,5 @@
-import './styles/Utility.css'
-import './styles/NewPost.css'
+import './styles/utility.css'
+import './styles/newPost.css'
 
 export const NewPost = (props) => {
   return (

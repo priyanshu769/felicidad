@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import './styles/Utility.css'
+import './styles/utility.css'
 
 export const ProfileUtilityBtn = (props) => {
   return (
