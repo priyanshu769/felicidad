@@ -39,7 +39,7 @@ export const EditProfile = () => {
     try {
       setSavedMessage('Updating Profile...')
       const saveProfile = await axios.post(
-        `http://felicidad-api.herokuapp.com/users/${userLoggedIn._id}`,
+        `https://felicidad-api.herokuapp.com/users/${userLoggedIn._id}`,
         editedProfile,
         { headers: { Authorization: userLoggedInToken } },
       )
