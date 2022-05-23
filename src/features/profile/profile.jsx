@@ -79,7 +79,7 @@ export const Profile = () => {
       const userPosts = allPosts.filter(
         (post) => post.user.username === username,
       )
-      setUserPosts(userPosts.reverse())
+      setUserPosts(userPosts)
       return setUserToShow(loggedInUser)
     } else {
       ;(async () => {
@@ -134,6 +134,7 @@ export const Profile = () => {
         : userPosts.map((post) => {
             return (
               <Post
+                avatarImg={post.user.profilePic ? post.user.profilePic : null}
                 authorName={post.user.username}
                 postText={post.caption}
                 postLikes={post.likes}
