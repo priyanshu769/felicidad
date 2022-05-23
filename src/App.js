@@ -30,6 +30,7 @@ function App() {
   const { loggedInUser, status } = useSelector((state) => state.profile)
   const timeline = useSelector((state) => state.timeline)
   const dispatch = useDispatch()
+  console.log(loggedInUser)
   useEffect(() => {
     const dataFromLocalStorage = JSON.parse(
       localStorage?.getItem('loggedInToken'),

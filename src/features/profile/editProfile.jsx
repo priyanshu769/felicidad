@@ -11,6 +11,7 @@ export const EditProfile = () => {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [bio, setBio] = useState('')
+  const [profilePicLink, setProfilePicLink] = useState('')
   const [password, setPassword] = useState('')
   const [savedMessage, setSavedMessage] = useState(null)
   const dispatch = useDispatch()
@@ -22,6 +23,7 @@ export const EditProfile = () => {
       userLoggedIn?.username && setUsername(userLoggedIn.username)
       userLoggedIn?.email && setEmail(userLoggedIn.email)
       userLoggedIn?.bio && setBio(userLoggedIn.bio)
+      userLoggedIn?.profilePic && setProfilePicLink(userLoggedIn.profilePic)
     }
   }, [userLoggedIn])
 
@@ -31,7 +33,8 @@ export const EditProfile = () => {
       name: name,
       email: email,
       bio: bio,
-      password: password
+      password: password,
+      profilePic: profilePicLink
     }
   }
 
@@ -90,6 +93,15 @@ export const EditProfile = () => {
         value={bio}
         onChange={(e) => setBio(e.target.value)}
         placeholder="Bio"
+        />
+        </p>
+        <p>
+        <input
+        className="inputOne"
+        type="text"
+        value={profilePicLink}
+        onChange={(e) => setProfilePicLink(e.target.value)}
+        placeholder="Profile Pic Link"
         />
         </p>
         <p>
