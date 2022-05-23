@@ -25,7 +25,7 @@ const timelineSlice = createSlice({
       state.status = 'loading'
     },
     [fetchPosts.fulfilled]: (state, action) => {
-      state.posts = action.payload.posts
+      state.posts = action.payload.posts.reverse()
       state.status = 'fullfilled'
     },
     [fetchPosts.error]: (state, action) => {

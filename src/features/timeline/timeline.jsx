@@ -7,6 +7,8 @@ import { addPost } from './timelineSlice'
 export const Timeline = () => {
   const loggedInUser = useSelector((state) => state.profile.loggedInUser)
   const timeline = useSelector((state) => state.timeline)
+  const [timelineLatest, setTimelineLatest] = useState(null)
+  console.log(timelineLatest)
   const [newPostText, setNewPostText] = useState('')
   const dispatch = useDispatch()
 
