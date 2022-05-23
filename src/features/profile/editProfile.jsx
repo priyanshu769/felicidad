@@ -8,7 +8,6 @@ export const EditProfile = () => {
   const userLoggedIn = useSelector((state) => state.profile.loggedInUser)
   const userLoggedInToken = useSelector((state) => state.auth.loggedInToken)
   const [name, setName] = useState('')
-  const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [bio, setBio] = useState('')
   const [profilePicLink, setProfilePicLink] = useState('')
@@ -20,7 +19,6 @@ export const EditProfile = () => {
   useEffect(() => {
     if (userLoggedIn) {
       userLoggedIn?.name && setName(userLoggedIn.name)
-      userLoggedIn?.username && setUsername(userLoggedIn.username)
       userLoggedIn?.email && setEmail(userLoggedIn.email)
       userLoggedIn?.bio && setBio(userLoggedIn.bio)
       userLoggedIn?.profilePic && setProfilePicLink(userLoggedIn.profilePic)
@@ -29,7 +27,6 @@ export const EditProfile = () => {
 
   const editedProfile = () => {
     return {
-      username: username,
       name: name,
       email: email,
       bio: bio,
@@ -66,15 +63,6 @@ export const EditProfile = () => {
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Name"
-        />
-        </p>
-        <p>
-        <input
-        className="inputOne"
-        type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        placeholder="Username"
         />
         </p>
         <p>
