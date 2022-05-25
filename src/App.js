@@ -64,11 +64,10 @@ function App() {
 
   return (
     <div className="App">
-    <div>
-      <div className="navLinks" style={{ display: loggedInToken ? 'block' : 'none' }}>
-        <span><NavLink activeClassName="navLinkActive" className="navLink" to="/">Home</NavLink></span>
-        <span><NavLink activeClassName="navLinkActive" className="navLink" to={`/${loggedInUser?.username}`}>Profile</NavLink></span>
-        <button className="navLink" onClick={logoutHandler}>Logout</button>
+      <div className="navbar" style={{ display: loggedInToken ? 'block' : 'none' }}>
+        <NavLink activeClassName="navLinkActive" className="navLink" to="/">Home</NavLink>
+        <NavLink activeClassName="navLinkActive" className="navLink" to={`/${loggedInUser?.username}`}>Profile</NavLink>
+        <button className="navLink logoutBtn" onClick={logoutHandler}>Logout</button>
       </div>
       <Routes>
         <DoublePrivateRoute
@@ -103,7 +102,6 @@ function App() {
         />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
-      </div>
     </div>
   )
 }

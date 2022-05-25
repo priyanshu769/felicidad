@@ -1,18 +1,25 @@
+.newPost {
+  width: 90%;
+  margin: auto;
+}
+
 .newPostText {
   width: 100%;
-  height: 7rem;
   border: none;
+  border-bottom: 2px solid var(--primary-dark);
+  height: 7rem;
+  padding: 0.3rem;
   resize: none;
 }
 
 .newPostActionBtnContainer {
-  margin-top: -1rem;
+  margin-top: 0.5rem;
   display: flex;
   justify-content: space-between;
 }
 
 @media only screen and (min-width: 992px) {
   .newPost {
-    width: 30rem;
+    
   }
 }

@@ -97,7 +97,7 @@ export const Profile = () => {
   }, [dispatch, loggedInUser, loggedInUserToken, username, allPosts])
 
   return (
-    <div>
+    <div className='profile'>
       {connectionMsg && <h3>{connectionMsg}</h3>}
       <ProfileDetail
         avatarImg={userToShow.profilePic ? userToShow.profilePic : null}
