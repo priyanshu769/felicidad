@@ -1,0 +1,18 @@
+.profileDetailsContainer {
+    margin: 0 1rem;
+}
+
+.profilePicAndName {
+    display: flex;
+    align-items: flex-start;
+}
+
+.profileNameAndConnection {
+    margin: 0.5rem 1rem;
+}
+
+.usernameProfile {
+    font-size: large;
+    font-weight: bold;
+    padding-left: 0.3rem;
+}

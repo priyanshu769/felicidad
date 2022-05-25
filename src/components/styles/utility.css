@@ -1,0 +1,68 @@
+.btnPrimary {
+    cursor: pointer;
+    border-radius: 0.3rem;
+    color: var(--white);
+    background: var(--primary-color);
+    width: 7rem;
+    padding: 0.2rem 0.5rem;
+    border: 2px solid var(--primary-color);
+}
+
+.btnSecondary {
+    cursor: pointer;
+    border: none;
+    color: var(--primary-dark);
+    background: none;
+    font-weight: bold;
+    padding: 0.3rem;
+}
+
+.btnTertiary {
+    cursor: pointer;
+    border: 2px solid var(--primary-dark);
+    border-radius: 1rem;
+    color: var(--primary-dark);
+    background: none;
+    font-weight: bold;
+    padding: 0.2rem 0.5rem;
+}
+
+.btnLogin {
+    margin-left: 0.5rem;
+}
+
+.imgAvatarSmContainer {
+    width: 3rem;
+}
+
+.imgAvataLgContainer {
+    width: 7rem;
+}
+
+.imgAvatar {
+    max-width: 100%;
+    border-radius: 100%;
+}
+
+.username {
+    font-weight: bold;
+}
+
+.usernameLink {
+    color: var(--primary-dark);
+    text-decoration: none;
+}
+
+.inputOne {
+    width: 90%;
+    padding: 0.5rem;
+    margin: 0.5rem;
+}
+
+.profileUtilityBtnContainer {
+    margin: 0 1rem;
+}
+
+.showPasswordContainer {
+    margin: 0 0.5rem;
+}

@@ -1,0 +1,26 @@
+.postContainer {
+    width: auto;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border-bottom: 2px solid var(--primary-dark);
+}
+
+.postAuthorCredentials {
+    display: flex;
+    align-items: flex-start;
+}
+
+.usernamePost {
+    padding-left: 0.5rem;
+    color: var(--primary-dark);
+}
+
+.postText {
+  padding: 0.5rem 0;
+}
+
+@media only screen and (min-width: 992px) {
+    .postContainer {
+      
+    }
+  }
