@@ -1,6 +1,4 @@
 import './styles/utility.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
 export const LoginBox = (props) => {

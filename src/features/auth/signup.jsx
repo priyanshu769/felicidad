@@ -9,27 +9,30 @@ export const Signup = () => {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [rePassword, setRePassword] = useState('')
   const [displayMessage, setDisplayMessage] = useState('')
   const authState = useSelector((state) => state.auth)
   const dispatch = useDispatch()
 
   const signupHandler = async () => {
-    try {
-      if (authState.status === 'Logged Out' || 'Error Logging In') {
-        setDisplayMessage('Signing Up')
-        dispatch(
-          signupUser({
-            username: username,
-            password: password,
-            name: name,
-            email: email,
-          }),
-        )
+    if (password === rePassword) {
+      try {
+        if (authState.status === 'Logged Out' || 'Error Logging In') {
+          setDisplayMessage('Signing Up')
+          dispatch(
+            signupUser({
+              username: username,
+              password: password,
+              name: name,
+              email: email,
+            }),
+          )
+        }
+      } catch (error) {
+        setDisplayMessage('Some error occured, try again or later')
+        console.log(error)
       }
-    } catch (error) {
-      setDisplayMessage('Some error occured, try again or later')
-      console.log(error)
-    }
+    } else setDisplayMessage('Passwords does not match!')
   }
   return (
     <div>
@@ -39,6 +42,7 @@ export const Signup = () => {
         signupUsername={(e) => setUsername(e.target.value)}
         signupEmail={(e) => setEmail(e.target.value)}
         signupPassword={(e) => setPassword(e.target.value)}
+        signupRePassword={(e) => setRePassword(e.target.value)}
         signupBtnClick={signupHandler}
       />
       <p>

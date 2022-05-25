@@ -1,6 +1,4 @@
 import './styles/utility.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
 export const SignupBox = (props) => {
@@ -33,6 +31,12 @@ export const SignupBox = (props) => {
         className="inputOne"
         type={showPass ? 'text' : 'password'}
         placeholder="Password"
+      />
+      <input
+        onChange={props.signupRePassword}
+        className="inputOne"
+        type={showPass ? 'text' : 'password'}
+        placeholder="Re-Password"
       />
       <div className='showPasswordContainer'>
       <input 
