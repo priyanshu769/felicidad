@@ -91,7 +91,7 @@ export const Profile = () => {
         const userPosts = allPosts.filter(
           (post) => post.user.username === username,
         )
-        setUserPosts(userPosts.reverse())
+        setUserPosts(userPosts)
       })()
     }
   }, [dispatch, loggedInUser, loggedInUserToken, username, allPosts])
