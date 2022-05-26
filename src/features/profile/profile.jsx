@@ -25,7 +25,6 @@ export const Profile = () => {
   const [showAreYouSureBox, setShowAreYouSureBox] = useState(false)
   const allPosts = useSelector((state) => state.timeline.posts)
   const dispatch = useDispatch()
-  console.log(loggedInUser)
   const newPost = () => {
     return {
       caption: newPostText,
@@ -49,9 +48,7 @@ export const Profile = () => {
   }
 
   const followBtnHandler = async (userToFollow) => {
-    console.log(userToFollow._id)
     if (loggedInUser.following.includes(userToFollow._id)) {
-      console.log('profile Page follow Btn triggered')
       try {
         const unfollowUser = await axios.get(
           `https://felicidad-api.herokuapp.com/users/${userToFollow._id}/unfollow`,
@@ -66,7 +63,6 @@ export const Profile = () => {
         console.log(error)
       }
     } else {
-      console.log('profile Page follow Btn triggered')
       try {
         const followUser = await axios.get(
           `https://felicidad-api.herokuapp.com/users/${userToFollow._id}/follow`,
