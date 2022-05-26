@@ -4,11 +4,12 @@ import {
   ProfileDetail,
   Post,
   ProfileUtilityBtn,
+  OptionsList
 } from '../../components'
 import { useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
-import { addPost } from '../timeline/timelineSlice'
+import { addPost, postDeleted } from '../timeline/timelineSlice'
 
 export const Profile = () => {
   const { username } = useParams()
@@ -18,6 +19,9 @@ export const Profile = () => {
   const [userPosts, setUserPosts] = useState([])
   const [newPostText, setNewPostText] = useState('')
   const [connectionMsg, setConnectionMsg] = useState(null)
+  const [showOptions, setShowOptions] = useState(false)
+  const [postToDelete, setPostToDelete] = useState(null)
+  const [showAreYouSureBox, setShowAreYouSureBox] = useState(false)
   const allPosts = useSelector((state) => state.timeline.posts)
   const dispatch = useDispatch()
 
@@ -71,6 +75,22 @@ export const Profile = () => {
         setConnectionMsg(error.message)
         console.log(error)
       }
+    }
+  }
+
+  const deletePostHandler = async (postId) => {
+    try {
+      const deletePost = await axios.post(
+        `http://felicidad-api.herokuapp.com/posts/${postId}/delete`,
+        {},
+      )
+      if (deletePost.data.success) {
+        dispatch(postDeleted(deletePost.data.postDeleted._id))
+        setPostToDelete(null)
+        setShowAreYouSureBox((showAreYouSureBox) => !showAreYouSureBox)
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -129,6 +149,23 @@ export const Profile = () => {
           setNewPostText('')
         }}
       />
+      <OptionsList
+        showOptions={showOptions}
+        onDeleteBtnClick={() => {
+          setShowAreYouSureBox((showAreYouSureBox) => !showAreYouSureBox)
+          setShowOptions((showOptions) => !showOptions)
+        }}
+        onCloseBtnClick={() => {
+          setPostToDelete(null)
+          setShowOptions((showOptions) => !showOptions)
+        }}
+        showAreYouSureBox={showAreYouSureBox}
+        onYesDeleteBtnClick={() => deletePostHandler(postToDelete)}
+        onNoDeleteBtnClick={() => {
+          setPostToDelete(null)
+          setShowAreYouSureBox((showAreYouSureBox) => !showAreYouSureBox)
+        }}
+      />
       {userPosts.length === 0
         ? 'Zero posts to show.'
         : userPosts.map((post) => {
@@ -138,7 +175,12 @@ export const Profile = () => {
                 authorName={post.user.username}
                 postText={post.caption}
                 postLikes={post.likes}
-                // onLikeBtnClick={() => dispatch(likeBtnClicked(post._postID))}
+                loggedInUserId={loggedInUser?._id}
+                postUserId={post.user._id}
+                onOptionsBtnClick={() => {
+                setPostToDelete(post._id)
+                setShowOptions((showOptions) => !showOptions)
+              }}
               />
             )
           })}

@@ -12,7 +12,6 @@ export const Timeline = () => {
   const [postToDelete, setPostToDelete] = useState(null)
   const [showAreYouSureBox, setShowAreYouSureBox] = useState(false)
   const dispatch = useDispatch()
-  console.log(loggedInUser?._id)
   const newPost = () => {
     return {
       caption: newPostText,
