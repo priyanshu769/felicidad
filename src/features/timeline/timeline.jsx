@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Post, NewPost } from '../../components'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
-import { addPost } from './timelineSlice'
+import { addPost, postLikedByUser } from './timelineSlice'
 
 export const Timeline = () => {
   const loggedInUser = useSelector((state) => state.profile.loggedInUser)
@@ -32,6 +32,18 @@ export const Timeline = () => {
     }
   }
 
+  const likeBtnHandler = async (postId) => {
+    try{
+      const postLiked = await axios.post(`https://felicidad-api.herokuapp.com/posts/${postId}/like`, {})
+      console.log(postLiked)
+      if(postLiked.data.success) {
+        dispatch(postLikedByUser(postLiked.data.postUpdated))
+      }
+    } catch(error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div>
       <NewPost
@@ -55,7 +67,7 @@ export const Timeline = () => {
               authorName={post.user.username}
               postText={post.caption}
               postLikes={post.likes}
-              // onLikeBtnClick={() => dispatch(likeBtnClicked(post._postID))}
+              onLikeBtnClick={() => likeBtnHandler(post._id)}
             />
           )
         })}
