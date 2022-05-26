@@ -10,6 +10,7 @@ import { useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { addPost, postDeleted } from '../timeline/timelineSlice'
+import { profileUnfollowed, profileFollowed } from './profileSlice'
 
 export const Profile = () => {
   const { username } = useParams()
@@ -24,7 +25,7 @@ export const Profile = () => {
   const [showAreYouSureBox, setShowAreYouSureBox] = useState(false)
   const allPosts = useSelector((state) => state.timeline.posts)
   const dispatch = useDispatch()
-
+  console.log(loggedInUser)
   const newPost = () => {
     return {
       caption: newPostText,
@@ -56,8 +57,10 @@ export const Profile = () => {
           `https://felicidad-api.herokuapp.com/users/${userToFollow._id}/unfollow`,
           { headers: { Authorization: loggedInUserToken } },
         )
-        console.log(unfollowUser)
-        setConnectionMsg(unfollowUser.message)
+        console.log(unfollowUser.data)
+        if(unfollowUser.data.success) {
+          dispatch(profileUnfollowed(userToShow._id))
+        }
       } catch (error) {
         setConnectionMsg(error)
         console.log(error)
@@ -69,8 +72,10 @@ export const Profile = () => {
           `https://felicidad-api.herokuapp.com/users/${userToFollow._id}/follow`,
           { headers: { Authorization: loggedInUserToken } },
         )
-        console.log(followUser)
-        setConnectionMsg(followUser.message)
+        console.log(followUser.data)
+        if(followUser.data.success) {
+          dispatch(profileFollowed(userToShow._id))
+        }
       } catch (error) {
         setConnectionMsg(error.message)
         console.log(error)

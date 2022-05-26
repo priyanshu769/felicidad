@@ -28,6 +28,13 @@ const profileSlice = createSlice({
     setProfileError: (state, action) => {
       state.error = action.payload
     },
+    profileFollowed: (state, action) => {
+      state.loggedInUser = {...state.loggedInUser, following: [...state.loggedInUser.following, action.payload]}
+    },
+    profileUnfollowed: (state, action) => {
+      const newFollowingList = state.loggedInUser.following.filter(userId => userId !== action.payload)
+      state.loggedInUser = {...state.loggedInUser, following: newFollowingList}
+    }
   },
   extraReducers: {
     [fetchLoggedInUser.pending]: (state, action) => {
@@ -47,6 +54,8 @@ export const {
   setUser,
   setProfileError,
   setProfileStatus,
+  profileFollowed,
+  profileUnfollowed
 } = profileSlice.actions
 
 export default profileSlice.reducer
