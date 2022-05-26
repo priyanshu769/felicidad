@@ -8,8 +8,8 @@ export const NewPost = (props) => {
         <textarea value={props.newPostValue} onChange={props.onChangeTextArea} placeholder="What's happening?" className="newPostText"></textarea>
       </div>
       <div className="newPostActionBtnContainer">
-        <p>{props.totalCharacters}</p>
-        <button onClick={props.onPostBtnClick} className="btnSecondary">Post</button>
+        <p className='totalChars'>{props.totalCharacters}</p>
+        <button onClick={props.onPostBtnClick} className="btnPrimary">Post</button>
       </div>
     </div>
   )
