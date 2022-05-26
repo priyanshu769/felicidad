@@ -1,20 +1,23 @@
 import { useState } from 'react'
-import { Post, NewPost } from '../../components'
+import { Post, NewPost, OptionsList } from '../../components'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
-import { addPost, postLikedByUser } from './timelineSlice'
+import { addPost, postLikedByUser, postDeleted } from './timelineSlice'
 
 export const Timeline = () => {
   const loggedInUser = useSelector((state) => state.profile.loggedInUser)
   const timeline = useSelector((state) => state.timeline)
   const [newPostText, setNewPostText] = useState('')
+  const [showOptions, setShowOptions] = useState(false)
+  const [postToDelete, setPostToDelete] = useState(null)
+  const [showAreYouSureBox, setShowAreYouSureBox] = useState(false)
   const dispatch = useDispatch()
-
+  console.log(loggedInUser?._id)
   const newPost = () => {
     return {
       caption: newPostText,
       likes: 0,
-      user: loggedInUser?._id
+      user: loggedInUser?._id,
     }
   }
 
@@ -33,19 +36,55 @@ export const Timeline = () => {
   }
 
   const likeBtnHandler = async (postId) => {
-    try{
-      const postLiked = await axios.post(`https://felicidad-api.herokuapp.com/posts/${postId}/like`, {})
+    try {
+      const postLiked = await axios.post(
+        `https://felicidad-api.herokuapp.com/posts/${postId}/like`,
+        {},
+      )
       console.log(postLiked)
-      if(postLiked.data.success) {
+      if (postLiked.data.success) {
         dispatch(postLikedByUser(postLiked.data.postUpdated))
       }
-    } catch(error) {
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const deletePostHandler = async (postId) => {
+    try {
+      const deletePost = await axios.post(
+        `http://felicidad-api.herokuapp.com/posts/${postId}/delete`,
+        {},
+      )
+      if (deletePost.data.success) {
+        dispatch(postDeleted(deletePost.data.postDeleted._id))
+        setPostToDelete(null)
+        setShowAreYouSureBox((showAreYouSureBox) => !showAreYouSureBox)
+      }
+    } catch (error) {
       console.log(error)
     }
   }
 
   return (
     <div>
+      <OptionsList
+        showOptions={showOptions}
+        onDeleteBtnClick={() => {
+          setShowAreYouSureBox((showAreYouSureBox) => !showAreYouSureBox)
+          setShowOptions((showOptions) => !showOptions)
+        }}
+        onCloseBtnClick={() => {
+          setPostToDelete(null)
+          setShowOptions((showOptions) => !showOptions)
+        }}
+        showAreYouSureBox={showAreYouSureBox}
+        onYesDeleteBtnClick={() => deletePostHandler(postToDelete)}
+        onNoDeleteBtnClick={() => {
+          setPostToDelete(null)
+          setShowAreYouSureBox((showAreYouSureBox) => !showAreYouSureBox)
+        }}
+      />
       <NewPost
         newPostValue={newPostText}
         onChangeTextArea={(e) => setNewPostText(e.target.value)}
@@ -67,6 +106,12 @@ export const Timeline = () => {
               authorName={post.user.username}
               postText={post.caption}
               postLikes={post.likes}
+              loggedInUserId={loggedInUser?._id}
+              postUserId={post.user._id}
+              onOptionsBtnClick={() => {
+                setPostToDelete(post._id)
+                setShowOptions((showOptions) => !showOptions)
+              }}
               onLikeBtnClick={() => likeBtnHandler(post._id)}
             />
           )

@@ -17,7 +17,7 @@ const timelineSlice = createSlice({
   initialState,
   reducers: {
     addPost: (state, action) => {
-      return { ...state, posts: [...state.posts, action.payload] }
+      return { ...state, posts: [action.payload, ...state.posts] }
     },
     postLikedByUser: (state, action) => {
       const postToLike = state.posts.find(post => post._id === action.payload._id)
@@ -28,6 +28,10 @@ const timelineSlice = createSlice({
           } else return post
         })}
       }
+    },
+    postDeleted: (state, action) => {
+      const newPosts = state.posts.filter(post => post._id !== action.payload)
+      return {...state, posts: newPosts}
     }
   },
   extraReducers: {
@@ -45,6 +49,6 @@ const timelineSlice = createSlice({
   },
 })
 
-export const { addPost, postLikedByUser } = timelineSlice.actions
+export const { addPost, postLikedByUser, postDeleted } = timelineSlice.actions
 
 export default timelineSlice.reducer

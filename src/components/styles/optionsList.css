@@ -1,0 +1,29 @@
+.optionsList {
+    width: 90%;
+    border: 2px solid var(--primary-dark);
+    background-color: var(--white);
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.optionsBtnContainer {
+    margin-top: 1rem;
+    margin-left: 1rem;
+}
+
+.optionsDetails {
+    margin-left: 0.5rem;
+    padding: 0.5rem;
+}
+
+.areYouSureBox {
+    z-index: 10;
+    position: absolute;
+    width: 15rem;
+    margin: auto;
+    padding: 1rem;
+    border: 2px solid var(--primary-dark);
+    border-radius: 1rem;
+    background-color: var(--white);
+}
