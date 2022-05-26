@@ -85,7 +85,7 @@ export const Timeline = () => {
           setShowAreYouSureBox((showAreYouSureBox) => !showAreYouSureBox)
         }}
       />
-      <NewPost
+      {loggedInUser && <NewPost
         newPostValue={newPostText}
         onChangeTextArea={(e) => setNewPostText(e.target.value)}
         totalCharacters={newPostText.length}
@@ -93,7 +93,7 @@ export const Timeline = () => {
           addPostHandler(newPost())
           setNewPostText('')
         }}
-      />
+      />}
       {timeline.status === 'loading' && <h2>Loading...</h2>}
       {timeline.status === 'error' && (
         <h2 style={{ color: 'red' }}>Some error occured...</h2>

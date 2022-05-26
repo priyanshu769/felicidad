@@ -64,7 +64,7 @@ function App() {
 
   return (
     <div className="App">
-      <div className="navbar" style={{ display: loggedInToken ? 'block' : 'none' }}>
+      <div className="navbar" style={{ display: loggedInUser ? 'block' : 'none' }}>
         <NavLink activeClassName="navLinkActive" className="navLink" to="/">Home</NavLink>
         <NavLink activeClassName="navLinkActive" className="navLink" to={`/${loggedInUser?.username}`}>Profile</NavLink>
         <button className="navLink logoutBtn" onClick={logoutHandler}>Logout</button>
