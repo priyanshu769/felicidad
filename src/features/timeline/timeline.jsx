@@ -52,7 +52,7 @@ export const Timeline = () => {
   const deletePostHandler = async (postId) => {
     try {
       const deletePost = await axios.post(
-        `http://felicidad-api.herokuapp.com/posts/${postId}/delete`,
+        `https://felicidad-api.herokuapp.com/posts/${postId}/delete`,
         {},
       )
       if (deletePost.data.success) {
