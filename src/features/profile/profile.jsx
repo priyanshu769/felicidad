@@ -4,7 +4,8 @@ import {
   ProfileDetail,
   Post,
   ProfileUtilityBtn,
-  OptionsList
+  OptionsList,
+  Loading
 } from '../../components'
 import { useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,7 +17,7 @@ export const Profile = () => {
   const { username } = useParams()
   const loggedInUserToken = useSelector((state) => state.auth.loggedInToken)
   const loggedInUser = useSelector((state) => state.profile.loggedInUser)
-  const [userToShow, setUserToShow] = useState({})
+  const [userToShow, setUserToShow] = useState(null)
   const [userPosts, setUserPosts] = useState([])
   const [newPostText, setNewPostText] = useState('')
   const [connectionMsg, setConnectionMsg] = useState(null)
@@ -118,7 +119,9 @@ export const Profile = () => {
   }, [dispatch, loggedInUser, loggedInUserToken, username, allPosts])
 
   return (
-    <div className='profile'>
+    <div>
+    {!userToShow && <Loading />}
+    {userToShow && <div className='profile'>
       {connectionMsg && <h3>{connectionMsg}</h3>}
       <ProfileDetail
         avatarImg={userToShow.profilePic ? userToShow.profilePic : null}
@@ -185,6 +188,7 @@ export const Profile = () => {
               />
             )
           })}
+    </div>}
     </div>
   )
 }

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
-import { FollowerCard } from '../../components'
+import { FollowerCard, Loading } from '../../components'
 
 export const Followers = () => {
   const { username } = useParams()
@@ -11,7 +11,6 @@ export const Followers = () => {
   const [connectionMsg, setConnectionMsg] = useState(null)
   const loggedInUserToken = useSelector((state) => state.auth.loggedInToken)
   const loggedInUser = useSelector((state) => state.profile.loggedInUser)
-  console.log(connectionMsg)
   useEffect(() => {
     ;(async () => {
       try {
@@ -64,7 +63,7 @@ export const Followers = () => {
 
   return (
     <div>
-      {loading === 'loading' && <h3>Loading...</h3>}
+      {loading === 'loading' && <Loading />}
       {loading === 'error' && (
         <h3 style={{ color: 'red' }}>Some error occured...</h3>
       )}

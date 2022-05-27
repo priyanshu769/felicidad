@@ -1,0 +1,15 @@
+.spin {
+    width: 3rem;
+    height: 3rem;
+    margin: auto;
+    margin-top: 1rem;
+    border-radius: 50%;
+    border: 5px solid var(--off-grey);
+    border-bottom-color: var(--primary-color);
+    animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

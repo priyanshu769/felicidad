@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
-import { FollowerCard } from '../../components'
+import { FollowerCard, Loading } from '../../components'
 
 export const Following = () => {
   const { username } = useParams()
@@ -64,7 +64,7 @@ export const Following = () => {
 
   return (
     <div>
-      {loading === 'loading' && <h3>Loading...</h3>}
+      {loading === 'loading' && <Loading />}
       {loading === 'error' && (
         <h3 style={{ color: 'red' }}>Some error occured...</h3>
       )}

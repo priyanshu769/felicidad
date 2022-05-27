@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Post, NewPost, OptionsList } from '../../components'
+import { Post, NewPost, OptionsList, Loading } from '../../components'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { addPost, postLikedByUser, postDeleted } from './timelineSlice'
@@ -93,7 +93,7 @@ export const Timeline = () => {
           setNewPostText('')
         }}
       />}
-      {timeline.status === 'loading' && <h2>Loading...</h2>}
+      {timeline.status === 'loading' && <Loading />}
       {timeline.status === 'error' && (
         <h2 style={{ color: 'red' }}>Some error occured...</h2>
       )}
