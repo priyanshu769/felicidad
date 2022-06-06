@@ -153,7 +153,8 @@ export const Profile = () => {
           setNewPostText('')
         }}
       />
-      <OptionsList
+      {showOptions && <OptionsList
+        setShowOptions={() => setShowOptions(showOptions => !showOptions)}
         showOptions={showOptions}
         onDeleteBtnClick={() => {
           setShowAreYouSureBox((showAreYouSureBox) => !showAreYouSureBox)
@@ -169,7 +170,7 @@ export const Profile = () => {
           setPostToDelete(null)
           setShowAreYouSureBox((showAreYouSureBox) => !showAreYouSureBox)
         }}
-      />
+      />}
       {userPosts.length === 0
         ? 'Zero posts to show.'
         : userPosts.map((post) => {

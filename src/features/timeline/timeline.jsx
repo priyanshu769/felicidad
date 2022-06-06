@@ -67,7 +67,8 @@ export const Timeline = () => {
 
   return (
     <div>
-      <OptionsList
+      {showOptions && <OptionsList
+        setShowOptions={() => setShowOptions(showOptions => !showOptions)}
         showOptions={showOptions}
         onDeleteBtnClick={() => {
           setShowAreYouSureBox((showAreYouSureBox) => !showAreYouSureBox)
@@ -83,7 +84,7 @@ export const Timeline = () => {
           setPostToDelete(null)
           setShowAreYouSureBox((showAreYouSureBox) => !showAreYouSureBox)
         }}
-      />
+      />}
       {loggedInUser && <NewPost
         newPostValue={newPostText}
         onChangeTextArea={(e) => setNewPostText(e.target.value)}

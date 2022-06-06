@@ -8,13 +8,19 @@
     left: 40%;
 }
 
+.closeOptions {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9;
+    height: 100vh;
+    width: 100vw;
+}
+
 .optionsList {
     z-index: 10;
     border: 2px solid var(--primary-dark);
     background-color: var(--off-white);
-    /* position: absolute;
-    right: 20px;
-    top: 20px; */
 }
 
 .optionsBtnContainer {
