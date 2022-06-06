@@ -1,10 +1,20 @@
+.optionsListAndSureBox {
+    width: 20rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 40%;
+    left: 40%;
+}
+
 .optionsList {
-    width: 90%;
+    z-index: 10;
     border: 2px solid var(--primary-dark);
     background-color: var(--off-white);
-    position: absolute;
+    /* position: absolute;
     right: 20px;
-    top: 20px;
+    top: 20px; */
 }
 
 .optionsBtnContainer {
@@ -27,4 +37,12 @@
     padding: 1rem;
     border: 2px solid var(--primary-dark);
     background-color: var(--off-white);
+}
+
+@media screen and (max-width: 900px) {
+    .optionsListAndSureBox {
+        position: fixed;
+        top: 40%;
+        left: 10%;
+    }
 }

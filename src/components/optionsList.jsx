@@ -4,7 +4,7 @@ import './styles/optionsList.css'
 
 export const OptionsList = (props) => {
   return (
-    <div>
+    <div className='optionsListAndSureBox'>
       <div
         style={{ display: props.showOptions ? 'block' : 'none' }}
         className="optionsList"

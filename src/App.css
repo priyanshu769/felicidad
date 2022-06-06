@@ -14,9 +14,11 @@
     padding: 0;
 }
 
-.App{
+.App {
     font-family: "Poppins", serif;
     color: var(--primary-dark);
+    width: 700px;
+    margin: auto;
 }
 
 .navbar {
@@ -35,4 +37,10 @@
 
 .logoutBtn {
     background: none;
+}
+
+@media screen and (max-width: 900px) {
+    .App {
+        width: auto;
+    }
 }

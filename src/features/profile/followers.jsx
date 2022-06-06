@@ -11,6 +11,7 @@ export const Followers = () => {
   const [connectionMsg, setConnectionMsg] = useState(null)
   const loggedInUserToken = useSelector((state) => state.auth.loggedInToken)
   const loggedInUser = useSelector((state) => state.profile.loggedInUser)
+  console.log(connectionMsg)
   useEffect(() => {
     ;(async () => {
       try {
