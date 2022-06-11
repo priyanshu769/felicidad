@@ -5,7 +5,7 @@ import './styles/optionsList.css'
 export const OptionsList = (props) => {
   return (
     <div className='optionsListAndSureBox'>
-    <div className='closeOptions' onClick={props.setShowOptions}></div>
+    <div className='closeOptions' onClick={props.onMenuCloseClick}></div>
       <div
         style={{ display: props.showOptions ? 'block' : 'none' }}
         className="optionsList"

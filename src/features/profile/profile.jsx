@@ -21,6 +21,7 @@ export const Profile = () => {
   const [userPosts, setUserPosts] = useState([])
   const [newPostText, setNewPostText] = useState('')
   const [connectionMsg, setConnectionMsg] = useState(null)
+  const [showMenu, setShowMenu] = useState(false)
   const [showOptions, setShowOptions] = useState(false)
   const [postToDelete, setPostToDelete] = useState(null)
   const [showAreYouSureBox, setShowAreYouSureBox] = useState(false)
@@ -90,6 +91,7 @@ export const Profile = () => {
         dispatch(postDeleted(deletePost.data.postDeleted._id))
         setPostToDelete(null)
         setShowAreYouSureBox((showAreYouSureBox) => !showAreYouSureBox)
+        setShowMenu(showMenu => !showMenu)
       }
     } catch (error) {
       console.log(error)
@@ -153,22 +155,26 @@ export const Profile = () => {
           setNewPostText('')
         }}
       />
-      {showOptions && <OptionsList
-        setShowOptions={() => setShowOptions(showOptions => !showOptions)}
-        showOptions={showOptions}
-        onDeleteBtnClick={() => {
-          setShowAreYouSureBox((showAreYouSureBox) => !showAreYouSureBox)
-          setShowOptions((showOptions) => !showOptions)
-        }}
-        onCloseBtnClick={() => {
+      {showMenu && <OptionsList
+        onMenuCloseClick={() => {
           setPostToDelete(null)
-          setShowOptions((showOptions) => !showOptions)
-        }}
-        showAreYouSureBox={showAreYouSureBox}
-        onYesDeleteBtnClick={() => deletePostHandler(postToDelete)}
-        onNoDeleteBtnClick={() => {
-          setPostToDelete(null)
-          setShowAreYouSureBox((showAreYouSureBox) => !showAreYouSureBox)
+          setShowMenu(showMenu => !showMenu)}}
+          showOptions={showOptions}
+          onDeleteBtnClick={() => {
+            setShowAreYouSureBox((showAreYouSureBox) => !showAreYouSureBox)
+            setShowOptions((showOptions) => !showOptions)
+          }}
+          onCloseBtnClick={() => {
+            setPostToDelete(null)
+            setShowOptions((showOptions) => !showOptions)
+            setShowMenu(false)
+          }}
+          showAreYouSureBox={showAreYouSureBox}
+          onYesDeleteBtnClick={() => deletePostHandler(postToDelete)}
+          onNoDeleteBtnClick={() => {
+            setPostToDelete(null)
+            setShowAreYouSureBox((showAreYouSureBox) => !showAreYouSureBox)
+            setShowMenu(false)
         }}
       />}
       {userPosts.length === 0
@@ -185,6 +191,7 @@ export const Profile = () => {
                 onOptionsBtnClick={() => {
                 setPostToDelete(post._id)
                 setShowOptions((showOptions) => !showOptions)
+                setShowMenu(showMenu => !showMenu)
               }}
               />
             )

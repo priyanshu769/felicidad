@@ -8,6 +8,7 @@ export const Timeline = () => {
   const loggedInUser = useSelector((state) => state.profile.loggedInUser)
   const timeline = useSelector((state) => state.timeline)
   const [newPostText, setNewPostText] = useState('')
+  const [showMenu, setShowMenu] = useState(false)
   const [showOptions, setShowOptions] = useState(false)
   const [postToDelete, setPostToDelete] = useState(null)
   const [showAreYouSureBox, setShowAreYouSureBox] = useState(false)
@@ -59,6 +60,7 @@ export const Timeline = () => {
         dispatch(postDeleted(deletePost.data.postDeleted._id))
         setPostToDelete(null)
         setShowAreYouSureBox((showAreYouSureBox) => !showAreYouSureBox)
+        setShowMenu(showMenu => !showMenu)
       }
     } catch (error) {
       console.log(error)
@@ -67,8 +69,10 @@ export const Timeline = () => {
 
   return (
     <div>
-      {showOptions && <OptionsList
-        setShowOptions={() => setShowOptions(showOptions => !showOptions)}
+      {showMenu && <OptionsList
+        onMenuCloseClick={() => {
+          setPostToDelete(null)
+          setShowMenu(showMenu => !showMenu)}}
         showOptions={showOptions}
         onDeleteBtnClick={() => {
           setShowAreYouSureBox((showAreYouSureBox) => !showAreYouSureBox)
@@ -77,6 +81,7 @@ export const Timeline = () => {
         onCloseBtnClick={() => {
           setPostToDelete(null)
           setShowOptions((showOptions) => !showOptions)
+          setShowMenu(false)
         }}
         showAreYouSureBox={showAreYouSureBox}
         onYesDeleteBtnClick={() => deletePostHandler(postToDelete)}
@@ -111,6 +116,7 @@ export const Timeline = () => {
               onOptionsBtnClick={() => {
                 setPostToDelete(post._id)
                 setShowOptions((showOptions) => !showOptions)
+                setShowMenu(showMenu => !showMenu)
               }}
               onLikeBtnClick={() => likeBtnHandler(post._id)}
             />
