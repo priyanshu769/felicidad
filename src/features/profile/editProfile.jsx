@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
+import { setToast } from '../toast/toastSlice'
 import { fetchLoggedInUser } from './profileSlice'
 
 export const EditProfile = () => {
@@ -36,21 +37,23 @@ export const EditProfile = () => {
   }
 
   const saveEditedProfile = async (editedProfile) => {
+    dispatch(setToast({showToast: true, toastMessage: "Updating profile"}))
     try {
-      setSavedMessage('Updating Profile...')
       const saveProfile = await axios.post(
         `https://felicidad-api.herokuapp.com/users/${userLoggedIn._id}`,
         editedProfile,
         { headers: { Authorization: userLoggedInToken } },
-      )
-      if (saveProfile.data.success) {
-        setSavedMessage('Profile Updated!')
-        dispatch(fetchLoggedInUser(userLoggedInToken))
-        navigate(`/${userLoggedIn.username}`)
-      }
-    } catch (error) {
-      setSavedMessage('Some Error Occured...')
-      console.log(error)
+        )
+        if (saveProfile.data.success) {
+          setSavedMessage('Profile Updated!')
+          dispatch(fetchLoggedInUser(userLoggedInToken))
+          navigate(`/${userLoggedIn.username}`)
+          dispatch(setToast({showToast: true, toastMessage: "Profile Updated"}))
+        }
+      } catch (error) {
+        setSavedMessage('Some Error Occured...')
+        console.log(error)
+        dispatch(setToast({showToast: true, toastMessage: "Uanble to update profile."}))
     }
   }
   return (

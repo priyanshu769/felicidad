@@ -13,6 +13,7 @@ import {
   PageNotFound,
   PrivateRoute,
   ReversePrivateRoute,
+  Toast,
 } from './components/index'
 import { useSelector, useDispatch } from 'react-redux'
 import {
@@ -24,10 +25,12 @@ import {
 import { setLoggedInToken } from './features/auth/authSlice'
 import { fetchPosts } from './features/timeline/timelineSlice'
 import { useEffect } from 'react'
+import { setToast } from './features/toast/toastSlice'
 
 function App() {
   const { loggedInToken } = useSelector((state) => state.auth)
   const { loggedInUser, status } = useSelector((state) => state.profile)
+  const { showToast, toastMessage } = useSelector(state => state.toast)
   const timeline = useSelector((state) => state.timeline)
   const dispatch = useDispatch()
   useEffect(() => {
@@ -41,7 +44,7 @@ function App() {
   }, [dispatch])
 
   useEffect(() => {
-    ;(async () => {
+    ; (async () => {
       if (loggedInToken && status === 'idle') {
         dispatch(fetchLoggedInUser(loggedInToken))
       }
@@ -54,21 +57,28 @@ function App() {
     }
   }, [dispatch, timeline.status, loggedInToken])
 
+  useEffect(() => {
+    if(showToast){
+      setTimeout(() => dispatch(setToast({ showToast: false, toastMessage: "" })), 4000)
+    }
+  }, [dispatch, showToast])
+
   const logoutHandler = () => {
     dispatch(setUser(null))
     dispatch(setProfileStatus('idle'))
     dispatch(setProfileError(null))
-    localStorage.removeItem('loggedInToken')
     dispatch(setLoggedInToken(null))
+    localStorage.removeItem('loggedInToken')
   }
 
   return (
     <div className="App">
-      <div className="navbar" style={{ display: loggedInUser ? 'block' : 'none' }}>
+      <div className="navbar" style={{ display: loggedInUser && loggedInToken ? 'block' : 'none' }}>
         <NavLink activeClassName="navLinkActive" className="navLink" to="/">Home</NavLink>
         <NavLink activeClassName="navLinkActive" className="navLink" to={`/${loggedInUser?.username}`}>Profile</NavLink>
         <button className="navLink logoutBtn" onClick={logoutHandler}>Logout</button>
       </div>
+      {showToast && <Toast toastMessage={toastMessage} />}
       <Routes>
         <DoublePrivateRoute
           login={loggedInToken}

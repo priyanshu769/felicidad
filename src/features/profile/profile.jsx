@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { addPost, postDeleted } from '../timeline/timelineSlice'
 import { profileUnfollowed, profileFollowed } from './profileSlice'
+import { setToast } from '../toast/toastSlice'
 
 export const Profile = () => {
   const { username } = useParams()
@@ -36,52 +37,62 @@ export const Profile = () => {
   }
 
   const addPostHandler = async (newPost) => {
+    dispatch(setToast({showToast: true, toastMessage: "Adding post"}))
     try {
       const postAdded = await axios.post(
         'https://felicidad-api.herokuapp.com/posts/',
         newPost,
-      )
-      if (postAdded.data.success) {
-        dispatch(addPost(postAdded.data.postAdded))
-      }
-    } catch (error) {
-      console.log(error)
+        )
+        if (postAdded.data.success) {
+          dispatch(addPost(postAdded.data.postAdded))
+          dispatch(setToast({showToast: true, toastMessage: "Post added"}))
+        }
+      } catch (error) {
+        console.log(error)
+        dispatch(setToast({showToast: true, toastMessage: "Unable to add post"}))
     }
   }
 
   const followBtnHandler = async (userToFollow) => {
     if (loggedInUser.following.includes(userToFollow._id)) {
+      dispatch(setToast({showToast: true, toastMessage: "Unfollowing User"}))
       try {
         const unfollowUser = await axios.get(
           `https://felicidad-api.herokuapp.com/users/${userToFollow._id}/unfollow`,
           { headers: { Authorization: loggedInUserToken } },
-        )
-        console.log(unfollowUser.data)
-        if(unfollowUser.data.success) {
-          dispatch(profileUnfollowed(userToShow._id))
+          )
+          console.log(unfollowUser.data)
+          if(unfollowUser.data.success) {
+            dispatch(profileUnfollowed(userToShow._id))
+            dispatch(setToast({showToast: true, toastMessage: "User unfollowed"}))
+          }
+        } catch (error) {
+          setConnectionMsg(error)
+          console.log(error)
+          dispatch(setToast({showToast: true, toastMessage: "Unable to unfollow user"}))
         }
-      } catch (error) {
-        setConnectionMsg(error)
-        console.log(error)
-      }
-    } else {
-      try {
-        const followUser = await axios.get(
-          `https://felicidad-api.herokuapp.com/users/${userToFollow._id}/follow`,
-          { headers: { Authorization: loggedInUserToken } },
-        )
-        console.log(followUser.data)
-        if(followUser.data.success) {
-          dispatch(profileFollowed(userToShow._id))
-        }
-      } catch (error) {
-        setConnectionMsg(error.message)
-        console.log(error)
+      } else {
+        dispatch(setToast({showToast: true, toastMessage: "Following User"}))
+        try {
+          const followUser = await axios.get(
+            `https://felicidad-api.herokuapp.com/users/${userToFollow._id}/follow`,
+            { headers: { Authorization: loggedInUserToken } },
+            )
+            console.log(followUser.data)
+            if(followUser.data.success) {
+              dispatch(profileFollowed(userToShow._id))
+              dispatch(setToast({showToast: true, toastMessage: "User followed"}))
+            }
+          } catch (error) {
+            setConnectionMsg(error.message)
+            console.log(error)
+            dispatch(setToast({showToast: true, toastMessage: "Unable to follow user"}))
       }
     }
   }
 
   const deletePostHandler = async (postId) => {
+    dispatch(setToast({showToast: true, toastMessage: "Deleting post"}))
     try {
       const deletePost = await axios.post(
         `https://felicidad-api.herokuapp.com/posts/${postId}/delete`,
@@ -92,8 +103,10 @@ export const Profile = () => {
         setPostToDelete(null)
         setShowAreYouSureBox((showAreYouSureBox) => !showAreYouSureBox)
         setShowMenu(showMenu => !showMenu)
+        dispatch(setToast({showToast: true, toastMessage: "Post Deleted"}))
       }
     } catch (error) {
+      dispatch(setToast({showToast: true, toastMessage: "Unable to delete post"}))
       console.log(error)
     }
   }

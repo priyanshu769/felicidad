@@ -3,24 +3,32 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUser } from './authSlice'
+import { setToast } from '../toast/toastSlice'
 
 export const Login = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [displayMsg, setDisplayMsg] = useState('')
   const dispatch = useDispatch()
   const authState = useSelector((state) => state.auth)
 
-  const loginHandler = (username, password) => {
-    if (authState.status === 'Logged Out' || 'Error Logging In') {
-      setDisplayMsg('Logging In')
-      dispatch(loginUser(username, password))
+  const loginHandler = (loginUserObj) => {
+    if (loginUserObj.username.length > 3 && loginUserObj.password.length > 3) {
+      try {
+        if (authState.status === 'Logged Out' || 'Error Logging In') {
+          dispatch(loginUser(loginUserObj))
+          dispatch(setToast({ showToast: true, toastMessage: "Logging In" }))
+        }
+      } catch(error) {
+        dispatch(setToast({ showToast: true, toastMessage: "Unable to Login Up" }))
+        console.log(error)
+      }
+    } else {
+      dispatch(setToast({ showToast: true, toastMessage: "Legit Username/Password Required" }))
     }
   }
 
   return (
     <div>
-      {displayMsg && <h3>{displayMsg}</h3>}
       <LoginBox
         usernameText={(e) => setUsername(e.target.value)}
         passwordText={(e) => setPassword(e.target.value)}

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { signupUser } from './authSlice'
+import { setToast } from '../toast/toastSlice'
 
 export const Signup = () => {
   const [name, setName] = useState('')
@@ -14,11 +15,11 @@ export const Signup = () => {
   const authState = useSelector((state) => state.auth)
   const dispatch = useDispatch()
 
-  const signupHandler = async () => {
+  const signupHandler = async () => {    
     if (password === rePassword) {
       try {
         if (authState.status === 'Logged Out' || 'Error Logging In') {
-          setDisplayMessage('Signing Up')
+          dispatch(setToast({ showToast: true, toastMessage: "Signing Up" }))
           dispatch(
             signupUser({
               username: username,
@@ -26,10 +27,10 @@ export const Signup = () => {
               name: name,
               email: email,
             }),
-          )
-        }
-      } catch (error) {
-        setDisplayMessage('Some error occured, try again or later')
+            )
+          }
+        } catch (error) {
+        dispatch(setToast({ showToast: true, toastMessage: "Unable to Sign Up" }))
         console.log(error)
       }
     } else setDisplayMessage('Passwords does not match!')

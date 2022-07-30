@@ -3,6 +3,7 @@ import { Post, NewPost, OptionsList, Loading } from '../../components'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { addPost, postLikedByUser, postDeleted } from './timelineSlice'
+import { setToast } from '../toast/toastSlice'
 
 export const Timeline = () => {
   const loggedInUser = useSelector((state) => state.profile.loggedInUser)
@@ -22,47 +23,56 @@ export const Timeline = () => {
   }
 
   const addPostHandler = async (newPost) => {
+    dispatch(setToast({showToast: true, toastMessage: "Adding post"}))
     try {
       const postAdded = await axios.post(
         'https://felicidad-api.herokuapp.com/posts/',
         newPost,
-      )
-      if (postAdded.data.success) {
+        )
+        if (postAdded.data.success) {
+        dispatch(setToast({showToast: true, toastMessage: "Post added"}))
         dispatch(addPost(postAdded.data.postAdded))
       }
     } catch (error) {
+      dispatch(setToast({showToast: true, toastMessage: "Unable to add post"}))
       console.log(error)
     }
   }
 
   const likeBtnHandler = async (postId) => {
+    dispatch(setToast({showToast: true, toastMessage: "Giving a heart to a post"}))
     try {
       const postLiked = await axios.post(
         `https://felicidad-api.herokuapp.com/posts/${postId}/like`,
         {},
-      )
-      console.log(postLiked)
-      if (postLiked.data.success) {
+        )
+        console.log(postLiked)
+        if (postLiked.data.success) {
+        dispatch(setToast({showToast: true, toastMessage: "You gave a heart to a post"}))
         dispatch(postLikedByUser(postLiked.data.postUpdated))
       }
     } catch (error) {
+      dispatch(setToast({showToast: true, toastMessage: "Unable to heart a post"}))
       console.log(error)
     }
   }
 
   const deletePostHandler = async (postId) => {
+    dispatch(setToast({showToast: true, toastMessage: "Deleting post"}))
     try {
       const deletePost = await axios.post(
         `https://felicidad-api.herokuapp.com/posts/${postId}/delete`,
         {},
-      )
-      if (deletePost.data.success) {
-        dispatch(postDeleted(deletePost.data.postDeleted._id))
-        setPostToDelete(null)
-        setShowAreYouSureBox((showAreYouSureBox) => !showAreYouSureBox)
-        setShowMenu(showMenu => !showMenu)
-      }
-    } catch (error) {
+        )
+        if (deletePost.data.success) {
+          dispatch(postDeleted(deletePost.data.postDeleted._id))
+          setPostToDelete(null)
+          setShowAreYouSureBox((showAreYouSureBox) => !showAreYouSureBox)
+          setShowMenu(showMenu => !showMenu)
+          dispatch(setToast({showToast: true, toastMessage: "Post Deleted"}))
+        }
+      } catch (error) {
+      dispatch(setToast({showToast: true, toastMessage: "Unable to delete post"}))
       console.log(error)
     }
   }

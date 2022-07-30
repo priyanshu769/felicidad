@@ -1,17 +1,17 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { FollowerCard, Loading } from '../../components'
+import { setToast } from '../toast/toastSlice'
 
 export const Followers = () => {
   const { username } = useParams()
+  const dispatch = useDispatch()
   const [followers, setFollowers] = useState([])
   const [loading, setLoading] = useState(null)
-  const [connectionMsg, setConnectionMsg] = useState(null)
   const loggedInUserToken = useSelector((state) => state.auth.loggedInToken)
   const loggedInUser = useSelector((state) => state.profile.loggedInUser)
-  console.log(connectionMsg)
   useEffect(() => {
     ;(async () => {
       try {
@@ -32,32 +32,35 @@ export const Followers = () => {
   }, [loggedInUserToken, username])
 
   const followBtnHandler = async (userToFollow) => {
-    console.log(userToFollow)
     if (loggedInUser.following.includes(userToFollow._id)) {
-      console.log('followers Page follow Btn triggered')
+      dispatch(setToast({showToast: true, toastMessage: "Unfollowing User"}))
       try {
         const unfollowUser = await axios.get(
           `https://felicidad-api.herokuapp.com/users/${userToFollow._id}/unfollow`,
           { headers: { Authorization: loggedInUserToken } },
-        )
-        console.log(unfollowUser)
-        setConnectionMsg(unfollowUser.message)
-      } catch (error) {
-        setConnectionMsg(error.message)
-        console.log(error)
-      }
-    } else {
-      console.log('followers Page follow Btn triggered')
-      try {
-        const followUser = await axios.get(
-          `https://felicidad-api.herokuapp.com/users/${userToFollow._id}/follow`,
-          { headers: { Authorization: loggedInUserToken } },
-        )
-        console.log(followUser)
-        setConnectionMsg(followUser.message)
-      } catch (error) {
-        setConnectionMsg(error.message)
-        console.log(error)
+          )
+          if(unfollowUser.data.success){
+            console.log(unfollowUser)
+            dispatch(setToast({showToast: true, toastMessage: "User unfollowed"}))
+          }
+        } catch (error) {
+          console.log(error)
+          dispatch(setToast({showToast: true, toastMessage: "Unable to unfollow user"}))
+        }
+      } else {
+        dispatch(setToast({showToast: true, toastMessage: "Following User"}))
+        try {
+          const followUser = await axios.get(
+            `https://felicidad-api.herokuapp.com/users/${userToFollow._id}/follow`,
+            { headers: { Authorization: loggedInUserToken } },
+            )
+            if(followUser.data.success){
+              console.log(followUser)
+              dispatch(setToast({showToast: true, toastMessage: "Followed User"}))
+            }
+          } catch (error) {
+            console.log(error)
+            dispatch(setToast({showToast: true, toastMessage: "Unable to follow User"}))
       }
     }
   }
