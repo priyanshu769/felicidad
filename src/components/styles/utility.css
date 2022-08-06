@@ -12,7 +12,7 @@
     cursor: pointer;
     border: none;
     color: var(--primary-dark);
-    background: none;
+    background: var(--white);
     font-weight: bold;
     padding: 0.3rem;
 }
@@ -20,11 +20,10 @@
 .btnTertiary {
     cursor: pointer;
     border: 2px solid var(--primary-dark);
-    border-radius: 1rem;
-    color: var(--primary-dark);
-    background: none;
-    font-weight: bold;
-    padding: 0.2rem 0.5rem;
+    border-radius: 0.5rem;
+    color: var(--white);
+    background-color: var(--primary-color);
+    padding: 0.3rem 0.7rem;
 }
 
 .btnLogin {

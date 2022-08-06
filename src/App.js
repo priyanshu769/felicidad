@@ -7,6 +7,7 @@ import {
   Followers,
   Signup,
   EditProfile,
+  Explore
 } from './features/index'
 import {
   DoublePrivateRoute,
@@ -26,6 +27,8 @@ import { setLoggedInToken } from './features/auth/authSlice'
 import { fetchPosts } from './features/timeline/timelineSlice'
 import { useEffect } from 'react'
 import { setToast } from './features/toast/toastSlice'
+import { BiHomeHeart } from 'react-icons/bi'
+import { FiUser, FiLogOut, FiCompass } from 'react-icons/fi'
 
 function App() {
   const { loggedInToken } = useSelector((state) => state.auth)
@@ -58,7 +61,7 @@ function App() {
   }, [dispatch, timeline.status, loggedInToken])
 
   useEffect(() => {
-    if(showToast){
+    if (showToast) {
       setTimeout(() => dispatch(setToast({ showToast: false, toastMessage: "" })), 4000)
     }
   }, [dispatch, showToast])
@@ -74,9 +77,10 @@ function App() {
   return (
     <div className="App">
       <div className="navbar" style={{ display: loggedInUser && loggedInToken ? 'block' : 'none' }}>
-        <NavLink activeClassName="navLinkActive" className="navLink" to="/">Home</NavLink>
-        <NavLink activeClassName="navLinkActive" className="navLink" to={`/${loggedInUser?.username}`}>Profile</NavLink>
-        <button className="navLink logoutBtn" onClick={logoutHandler}>Logout</button>
+        <NavLink activeClassName="navLinkActive" className="navLink" to="/"><BiHomeHeart size={35} /></NavLink>
+        <NavLink activeClassName="navLinkActive" className="navLink" to="/explore"><FiCompass size={35} /></NavLink>
+        <NavLink activeClassName="navLinkActive" className="navLink" to={`/${loggedInUser?.username}`}><FiUser size={35} /></NavLink>
+        {loggedInToken && <button className="navLink logoutBtn" onClick={logoutHandler}><FiLogOut size={35} /></button>}
       </div>
       {showToast && <Toast toastMessage={toastMessage} />}
       <Routes>
@@ -84,6 +88,11 @@ function App() {
           login={loggedInToken}
           element={<Timeline />}
           path="/"
+        />
+        <PrivateRoute
+          login={loggedInToken}
+          path="/explore"
+          element={<Explore />}
         />
         <PrivateRoute
           login={loggedInToken}

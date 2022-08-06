@@ -12,6 +12,7 @@ export const Followers = () => {
   const [loading, setLoading] = useState(null)
   const loggedInUserToken = useSelector((state) => state.auth.loggedInToken)
   const loggedInUser = useSelector((state) => state.profile.loggedInUser)
+  
   useEffect(() => {
     ;(async () => {
       try {

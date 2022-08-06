@@ -4,7 +4,9 @@
   justify-content: space-between;
   padding: 0.5rem;
   margin: 0.5rem;
-  background-color: var(--off-white);
+  border: 2px solid var(--off-white);
+  border-radius: 0.5rem;
+  box-shadow: 7px 6px 5px var(--off-white);
 }
 
 .imgAvatarSmContainer {
@@ -22,6 +24,6 @@
 
 @media only screen and (max-width: 900px) {
   .followerCredentials {
-   width: 20rem;
+    width: 20rem;
   }
 }

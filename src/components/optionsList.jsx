@@ -14,7 +14,7 @@ export const OptionsList = (props) => {
           <button onClick={props.onDeleteBtnClick} className="btnSecondary">
             Delete
           </button>
-          <button onClick={props.onCloseBtnClick} className="btnSecondary">
+          <button onClick={props.onMenuCloseClick} className="btnSecondary">
             Close
           </button>
         </div>
@@ -26,7 +26,7 @@ export const OptionsList = (props) => {
         <button onClick={props.onYesDeleteBtnClick} className="btnSecondary">
           Yes
         </button>
-        <button onClick={props.onNoDeleteBtnClick} className="btnTertiary">
+        <button onClick={props.onMenuCloseClick} className="btnTertiary">
           No
         </button>
       </div>

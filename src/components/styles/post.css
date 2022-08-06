@@ -2,7 +2,9 @@
     width: auto;
     margin: 0.5rem;
     padding: 0.5rem;
-    border-bottom: 2px solid var(--primary-dark);
+    border: 2px solid var(--off-white);
+    border-radius: 0.5rem;
+    box-shadow: 7px 6px 5px var(--off-white);
 }
 
 .postAuthorCredentials {
@@ -21,4 +23,8 @@
 
 .showOptionsBtn {
     margin-left: 1rem;
+}
+
+.postLikesNumber {
+    font-size: 16px;
 }

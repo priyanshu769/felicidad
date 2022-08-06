@@ -19,8 +19,10 @@
 
 .optionsList {
     z-index: 10;
-    border: 2px solid var(--primary-dark);
-    background-color: var(--off-white);
+    border: 2px solid var(--off-white);
+    border-radius: 0.5rem;
+    box-shadow: 7px 6px 5px var(--dark-grey);
+    background-color: var(--white);
 }
 
 .optionsBtnContainer {
@@ -41,8 +43,10 @@
     width: 15rem;
     margin: auto;
     padding: 1rem;
-    border: 2px solid var(--primary-dark);
-    background-color: var(--off-white);
+    border: 2px solid var(--off-white);
+    border-radius: 0.5rem;
+    box-shadow: 7px 6px 5px var(--dark-grey);
+    background-color: var(--white);
 }
 
 @media screen and (max-width: 900px) {

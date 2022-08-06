@@ -4,10 +4,14 @@ import axios from 'axios'
 export const fetchLoggedInUser = createAsyncThunk(
   'profile/fetchLoggedInUser',
   async (loggedInUserToken) => {
-    const res = await axios.get('https://felicidad-api.herokuapp.com/users/', {
-      headers: { Authorization: loggedInUserToken },
-    })
-    return res.data
+    try{
+      const res = await axios.get('https://felicidad-api.herokuapp.com/users/', {
+        headers: { Authorization: loggedInUserToken },
+      })
+      return res.data
+    } catch (error) {
+      console.log(error, "Unable to fetch loggedInUser")
+    }
   },
 )
 
