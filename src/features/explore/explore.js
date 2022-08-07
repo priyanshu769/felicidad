@@ -16,7 +16,6 @@ export const Explore = () => {
                 const serverResponse = await axios.get(
                     'https://felicidad-api.herokuapp.com/users/all', { headers: { Authorization: loggedInUserToken } }
                 )
-                console.log(serverResponse.data.users)
                 if (serverResponse.data.success) {
                     setUsers(serverResponse.data.users.filter(user => user.username !== loggedInUser.username))
                 }

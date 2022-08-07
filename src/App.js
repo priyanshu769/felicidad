@@ -36,6 +36,7 @@ function App() {
   const { showToast, toastMessage } = useSelector(state => state.toast)
   const timeline = useSelector((state) => state.timeline)
   const dispatch = useDispatch()
+
   useEffect(() => {
     const dataFromLocalStorage = JSON.parse(
       localStorage?.getItem('loggedInToken'),

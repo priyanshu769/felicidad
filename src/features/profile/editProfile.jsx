@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { setToast } from '../toast/toastSlice'
-import { fetchLoggedInUser } from './profileSlice'
+import { fetchLoggedInUser, setLoggedInUser } from './profileSlice'
 
 export const EditProfile = () => {
   const userLoggedIn = useSelector((state) => state.profile.loggedInUser)
@@ -45,8 +45,10 @@ export const EditProfile = () => {
         { headers: { Authorization: userLoggedInToken } },
         )
         if (saveProfile.data.success) {
+          console.log(saveProfile.data)
           setSavedMessage('Profile Updated!')
           dispatch(fetchLoggedInUser(userLoggedInToken))
+          dispatch(setLoggedInUser(saveProfile.data.user))
           navigate(`/${userLoggedIn.username}`)
           dispatch(setToast({showToast: true, toastMessage: "Profile Updated"}))
         }
@@ -105,6 +107,7 @@ export const EditProfile = () => {
           />
       </p>
       <button className="btnPrimary btnLogin" onClick={() => saveEditedProfile(editedProfile())}>Save</button>
+      <button className="btnTertiary" onClick={() => navigate(`/${userLoggedIn.username}`)}>Cancel</button>
       {/*Add a change password route here.*/}
     </div>
   )

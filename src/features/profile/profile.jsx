@@ -171,25 +171,17 @@ export const Profile = () => {
         {showMenu && <OptionsList
           onMenuCloseClick={() => {
             setPostToDelete(null)
-            setShowMenu(showMenu => !showMenu)
+            setShowOptions(false)
+            setShowAreYouSureBox(false)
+            setShowMenu(false)
           }}
           showOptions={showOptions}
           onDeleteBtnClick={() => {
             setShowAreYouSureBox((showAreYouSureBox) => !showAreYouSureBox)
             setShowOptions((showOptions) => !showOptions)
           }}
-          onCloseBtnClick={() => {
-            setPostToDelete(null)
-            setShowOptions((showOptions) => !showOptions)
-            setShowMenu(false)
-          }}
           showAreYouSureBox={showAreYouSureBox}
           onYesDeleteBtnClick={() => deletePostHandler(postToDelete)}
-          onNoDeleteBtnClick={() => {
-            setPostToDelete(null)
-            setShowAreYouSureBox((showAreYouSureBox) => !showAreYouSureBox)
-            setShowMenu(false)
-          }}
         />}
         {userPosts.length === 0
           ? 'Zero posts to show.'

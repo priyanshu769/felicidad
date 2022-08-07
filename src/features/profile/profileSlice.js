@@ -4,11 +4,13 @@ import axios from 'axios'
 export const fetchLoggedInUser = createAsyncThunk(
   'profile/fetchLoggedInUser',
   async (loggedInUserToken) => {
-    try{
+    try {
       const res = await axios.get('https://felicidad-api.herokuapp.com/users/', {
         headers: { Authorization: loggedInUserToken },
       })
-      return res.data
+      if (res.data.success) {
+        return res.data
+      } else return { username: 'user', name: 'User', profilePic: '' }
     } catch (error) {
       console.log(error, "Unable to fetch loggedInUser")
     }
@@ -33,11 +35,14 @@ const profileSlice = createSlice({
       state.error = action.payload
     },
     profileFollowed: (state, action) => {
-      state.loggedInUser = {...state.loggedInUser, following: [...state.loggedInUser.following, action.payload]}
+      state.loggedInUser = { ...state.loggedInUser, following: [...state.loggedInUser.following, action.payload] }
     },
     profileUnfollowed: (state, action) => {
       const newFollowingList = state.loggedInUser.following.filter(userId => userId !== action.payload)
-      state.loggedInUser = {...state.loggedInUser, following: newFollowingList}
+      state.loggedInUser = { ...state.loggedInUser, following: newFollowingList }
+    },
+    setLoggedInUser: (state, action) => {
+      state.loggedInUser = action.payload
     }
   },
   extraReducers: {
@@ -59,7 +64,8 @@ export const {
   setProfileError,
   setProfileStatus,
   profileFollowed,
-  profileUnfollowed
+  profileUnfollowed,
+  setLoggedInUser
 } = profileSlice.actions
 
 export default profileSlice.reducer

@@ -24,6 +24,7 @@
     color: var(--white);
     background-color: var(--primary-color);
     padding: 0.3rem 0.7rem;
+    margin: 0.5rem;
 }
 
 .btnLogin {
