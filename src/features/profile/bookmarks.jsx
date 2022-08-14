@@ -45,7 +45,7 @@ export const Bookmarks = () => {
             {},
             { headers: { Authorization: loggedInUserToken } })
             if(postBookmarked.data.success){
-              dispatch(setToast({ showToast: true, toastMessage: "Post bookmarked." }))
+              dispatch(setToast({ showToast: true, toastMessage: postBookmarked.data.message }))
               dispatch(postBookmarkedByUser({postId}))
             }
         } catch (error) {
