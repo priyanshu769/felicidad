@@ -11,7 +11,7 @@ import { useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { addPost, postLikedByUser, postDeleted } from '../timeline/timelineSlice'
-import { profileUnfollowed, profileFollowed } from './profileSlice'
+import { profileUnfollowed, profileFollowed, postBookmarkedByUser } from './profileSlice'
 import { setToast } from '../toast/toastSlice'
 
 export const Profile = () => {
@@ -100,10 +100,26 @@ export const Profile = () => {
       )
       if (postLiked.data.success) {
         dispatch(setToast({ showToast: true, toastMessage: postLiked.data.message }))
-        dispatch(postLikedByUser({postId, userId}))
+        dispatch(postLikedByUser({ postId, userId }))
       }
     } catch (error) {
       dispatch(setToast({ showToast: true, toastMessage: "Unable to heart a post" }))
+      console.log(error)
+    }
+  }
+
+  const bookmarkHandler = async (postId) => {
+    dispatch(setToast({ showToast: true, toastMessage: "Updating Bookmarks." }))
+    try {
+      const postBookmarked = await axios.post(
+        `https://felicidad-api.herokuapp.com/bookmark/${postId}/`,
+        {},
+        { headers: { Authorization: loggedInUserToken } })
+      if (postBookmarked.data.success) {
+        dispatch(setToast({ showToast: true, toastMessage: "Post bookmarked." }))
+        dispatch(postBookmarkedByUser({ postId }))
+      }
+    } catch (error) {
       console.log(error)
     }
   }
@@ -217,6 +233,8 @@ export const Profile = () => {
                   setShowMenu(showMenu => !showMenu)
                 }}
                 onLikeBtnClick={() => likeBtnHandler(post._id, loggedInUser._id)}
+                onBookmarkBtnClick={() => bookmarkHandler(post._id, loggedInUser._id)}
+                postBookmarked={loggedInUser?.bookmarks?.includes(post._id)} s
               />
             )
           })}

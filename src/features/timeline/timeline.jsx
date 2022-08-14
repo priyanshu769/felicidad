@@ -3,9 +3,11 @@ import { Post, NewPost, OptionsList, Loading } from '../../components'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { addPost, postLikedByUser, postDeleted } from './timelineSlice'
+import { postBookmarkedByUser } from '../profile/profileSlice'
 import { setToast } from '../toast/toastSlice'
 
 export const Timeline = () => {
+  const loggedInUserToken = useSelector((state) => state.auth.loggedInToken)
   const loggedInUser = useSelector((state) => state.profile.loggedInUser)
   const timeline = useSelector((state) => state.timeline)
   const [newPostText, setNewPostText] = useState('')
@@ -14,7 +16,7 @@ export const Timeline = () => {
   const [postToDelete, setPostToDelete] = useState(null)
   const [showAreYouSureBox, setShowAreYouSureBox] = useState(false)
   const dispatch = useDispatch()
-  console.log(timeline)
+
   const newPost = () => {
     return {
       caption: newPostText,
@@ -45,14 +47,30 @@ export const Timeline = () => {
     try {
       const postLiked = await axios.post(
         `https://felicidad-api.herokuapp.com/posts/${postId}/like`,
-        {likedByUser: userId},
+        { likedByUser: userId },
       )
       if (postLiked.data.success) {
         dispatch(setToast({ showToast: true, toastMessage: postLiked.data.message }))
-        dispatch(postLikedByUser({postId, userId}))
+        dispatch(postLikedByUser({ postId, userId }))
       }
     } catch (error) {
       dispatch(setToast({ showToast: true, toastMessage: "Unable to heart a post" }))
+      console.log(error)
+    }
+  }
+
+  const bookmarkHandler = async (postId) => {
+    dispatch(setToast({ showToast: true, toastMessage: "Updating Bookmarks." }))
+    try {
+      const postBookmarked = await axios.post(
+        `https://felicidad-api.herokuapp.com/bookmark/${postId}/`,
+        {},
+        { headers: { Authorization: loggedInUserToken } })
+        if(postBookmarked.data.success){
+          dispatch(setToast({ showToast: true, toastMessage: "Post bookmarked." }))
+          dispatch(postBookmarkedByUser({postId}))
+        }
+    } catch (error) {
       console.log(error)
     }
   }
@@ -123,6 +141,8 @@ export const Timeline = () => {
                 setShowMenu(showMenu => !showMenu)
               }}
               onLikeBtnClick={() => likeBtnHandler(post._id, loggedInUser._id)}
+              onBookmarkBtnClick={() => bookmarkHandler(post._id, loggedInUser._id)}
+              postBookmarked={loggedInUser?.bookmarks?.includes(post._id)}
             />
           )
         })}

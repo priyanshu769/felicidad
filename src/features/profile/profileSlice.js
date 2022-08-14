@@ -43,29 +43,38 @@ const profileSlice = createSlice({
     },
     setLoggedInUser: (state, action) => {
       state.loggedInUser = action.payload
-    }
-  },
-  extraReducers: {
-    [fetchLoggedInUser.pending]: (state, action) => {
-      state.status = 'pending'
     },
-    [fetchLoggedInUser.fulfilled]: (state, action) => {
-      state.loggedInUser = action.payload.user
-      state.status = 'fullfilled'
-    },
-    [fetchLoggedInUser.error]: (state, action) => {
-      state.error = action.error.message
-      state.status = 'error'
+    postBookmarkedByUser: (state, action) => {
+      const bookmarked = state.loggedInUser.bookmarks.find(bookmarkId => bookmarkId === action.payload.postId)
+      if (bookmarked) {
+        return { ...state, loggedInUser: { ...state.loggedInuser, bookmarks: state.loggedInUser.bookmarks.filter(bookmarkId => bookmarkId !== action.payload.postId) } }
+      } else {
+        return { ...state, loggedInUser: { ...state.loggedInUser, bookmarks: [...state.loggedInUser.bookmarks, action.payload.postId] } }
+      }
     },
   },
-})
+    extraReducers: {
+      [fetchLoggedInUser.pending]: (state, action) => {
+        state.status = 'pending'
+      },
+      [fetchLoggedInUser.fulfilled]: (state, action) => {
+        state.loggedInUser = action.payload.user
+        state.status = 'fullfilled'
+      },
+      [fetchLoggedInUser.error]: (state, action) => {
+        state.error = action.error.message
+        state.status = 'error'
+      },
+    },
+  })
 export const {
   setUser,
   setProfileError,
   setProfileStatus,
   profileFollowed,
   profileUnfollowed,
-  setLoggedInUser
+  setLoggedInUser,
+  postBookmarkedByUser
 } = profileSlice.actions
 
 export default profileSlice.reducer

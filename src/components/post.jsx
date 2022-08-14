@@ -2,7 +2,7 @@ import './styles/utility.css'
 import './styles/post.css'
 import { Link } from 'react-router-dom'
 import { FcLikePlaceholder, FcLike } from 'react-icons/fc'
-import { BsThreeDots } from 'react-icons/bs'
+import { BsThreeDots, BsBookmark, BsFillBookmarkFill } from 'react-icons/bs'
 
 export const Post = (props) => {
   return (
@@ -32,6 +32,9 @@ export const Post = (props) => {
       <button onClick={props.onLikeBtnClick} className="btnSecondary">
         {props.postLikes > 0 ? <FcLike size={25} /> : <FcLikePlaceholder size={25} />}
         <span className="postLikesNumber"> {props.postLikes}</span>
+      </button>
+      <button onClick={props.onBookmarkBtnClick} className="btnSecondary">
+        {props.postBookmarked ? <BsFillBookmarkFill size={20} /> : <BsBookmark size={20} />}
       </button>
     </div>
   )
