@@ -235,7 +235,7 @@ export const Profile = () => {
                 }}
                 onLikeBtnClick={() => likeBtnHandler(post._id, loggedInUser._id)}
                 onBookmarkBtnClick={() => bookmarkHandler(post._id, loggedInUser._id)}
-                postBookmarked={loggedInUser?.bookmarks?.includes(post._id)} s
+                postBookmarked={loggedInUser?.bookmarks?.includes(post._id)}
               />
             )
           })}

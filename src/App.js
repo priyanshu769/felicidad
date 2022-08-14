@@ -7,7 +7,8 @@ import {
   Followers,
   Signup,
   EditProfile,
-  Explore
+  Explore,
+  Bookmarks
 } from './features/index'
 import {
   DoublePrivateRoute,
@@ -29,6 +30,7 @@ import { useEffect } from 'react'
 import { setToast } from './features/toast/toastSlice'
 import { BiHomeHeart } from 'react-icons/bi'
 import { FiUser, FiLogOut, FiCompass } from 'react-icons/fi'
+import { BsBookmark } from 'react-icons/bs'
 
 function App() {
   const { loggedInToken } = useSelector((state) => state.auth)
@@ -80,6 +82,7 @@ function App() {
       <div className="navbar" style={{ display: loggedInUser && loggedInToken ? 'block' : 'none' }}>
         <NavLink activeClassName="navLinkActive" className="navLink" to="/"><BiHomeHeart size={35} /></NavLink>
         <NavLink activeClassName="navLinkActive" className="navLink" to="/explore"><FiCompass size={35} /></NavLink>
+        <NavLink activeClassName="navLinkActive" className="navLink" to="/bookmarks"><BsBookmark size={35} /></NavLink>
         <NavLink activeClassName="navLinkActive" className="navLink" to={`/${loggedInUser?.username}`}><FiUser size={35} /></NavLink>
         {loggedInToken && <button className="navLink logoutBtn" onClick={logoutHandler}><FiLogOut size={35} /></button>}
       </div>
@@ -99,6 +102,11 @@ function App() {
           login={loggedInToken}
           path="/:username"
           element={<Profile />}
+        />
+        <PrivateRoute
+          login={loggedInToken}
+          path="/bookmarks"
+          element={<Bookmarks />}
         />
         <PrivateRoute
           login={loggedInToken}
