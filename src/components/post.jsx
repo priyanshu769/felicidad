@@ -30,7 +30,7 @@ export const Post = (props) => {
         <p className="postText">{props.postText}</p>
       </div>
       <button onClick={props.onLikeBtnClick} className="btnSecondary">
-        {props.postLikes > 0 ? <FcLike size={25} /> : <FcLikePlaceholder size={25} />}
+        {props.postLiked ? <FcLike size={25} /> : <FcLikePlaceholder size={25} />}
         <span className="postLikesNumber"> {props.postLikes}</span>
       </button>
       <button onClick={props.onBookmarkBtnClick} className="btnSecondary">

@@ -133,6 +133,7 @@ export const Timeline = () => {
               authorName={post.user.username}
               postText={post.caption}
               postLikes={post.likes.length}
+              postLiked={post.likes.includes(loggedInUser?._id)}
               loggedInUserId={loggedInUser?._id}
               postUserId={post.user._id}
               onOptionsBtnClick={() => {
