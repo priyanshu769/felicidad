@@ -10,7 +10,7 @@ import {
 import { useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
-import { addPost, postDeleted } from '../timeline/timelineSlice'
+import { addPost, postLikedByUser, postDeleted } from '../timeline/timelineSlice'
 import { profileUnfollowed, profileFollowed } from './profileSlice'
 import { setToast } from '../toast/toastSlice'
 
@@ -88,6 +88,23 @@ export const Profile = () => {
         console.log(error)
         dispatch(setToast({ showToast: true, toastMessage: "Unable to follow user" }))
       }
+    }
+  }
+
+  const likeBtnHandler = async (postId, userId) => {
+    dispatch(setToast({ showToast: true, toastMessage: "Heart actioned on post." }))
+    try {
+      const postLiked = await axios.post(
+        `https://felicidad-api.herokuapp.com/posts/${postId}/like`,
+        { likedByUser: userId },
+      )
+      if (postLiked.data.success) {
+        dispatch(setToast({ showToast: true, toastMessage: postLiked.data.message }))
+        dispatch(postLikedByUser({postId, userId}))
+      }
+    } catch (error) {
+      dispatch(setToast({ showToast: true, toastMessage: "Unable to heart a post" }))
+      console.log(error)
     }
   }
 
@@ -191,7 +208,7 @@ export const Profile = () => {
                 avatarImg={post.user.profilePic ? post.user.profilePic : null}
                 authorName={post.user.username}
                 postText={post.caption}
-                postLikes={post.likes}
+                postLikes={post.likes.length}
                 loggedInUserId={loggedInUser?._id}
                 postUserId={post.user._id}
                 onOptionsBtnClick={() => {
@@ -199,6 +216,7 @@ export const Profile = () => {
                   setShowOptions((showOptions) => !showOptions)
                   setShowMenu(showMenu => !showMenu)
                 }}
+                onLikeBtnClick={() => likeBtnHandler(post._id, loggedInUser._id)}
               />
             )
           })}

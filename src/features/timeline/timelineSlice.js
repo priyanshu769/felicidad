@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 export const fetchPosts = createAsyncThunk('/timeline/fetchPosts', async () => {
+  console.log('fetchPostsTriggered')
   const res = await axios.get('https://felicidad-api.herokuapp.com/posts')
   return res.data
 })
@@ -20,18 +21,25 @@ const timelineSlice = createSlice({
       return { ...state, posts: [action.payload, ...state.posts] }
     },
     postLikedByUser: (state, action) => {
-      const postToLike = state.posts.find(post => post._id === action.payload._id)
-      if(postToLike) {
-        return {...state, posts: state.posts.map(post => {
-          if(post._id === postToLike._id){
-            return {...post, likes: action.payload.likes}
-          } else return post
-        })}
+      const postToLike = state.posts.find(post => post._id === action.payload.postId)
+      if (postToLike) {
+        return {
+          ...state, posts: state.posts.map(post => {
+            if (post._id === postToLike._id) {
+              if (postToLike.likes.includes(action.payload.userId)) {
+                const newLikes = postToLike.likes.filter(like => like !== action.payload.userId)
+                return{...post, likes: newLikes}
+              } else {
+                return {...post, likes: [...post.likes, action.payload.userId]}
+              }
+            } else return post
+          })
+        }
       }
     },
     postDeleted: (state, action) => {
       const newPosts = state.posts.filter(post => post._id !== action.payload)
-      return {...state, posts: newPosts}
+      return { ...state, posts: newPosts }
     }
   },
   extraReducers: {

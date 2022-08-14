@@ -14,6 +14,7 @@ export const Timeline = () => {
   const [postToDelete, setPostToDelete] = useState(null)
   const [showAreYouSureBox, setShowAreYouSureBox] = useState(false)
   const dispatch = useDispatch()
+  console.log(timeline)
   const newPost = () => {
     return {
       caption: newPostText,
@@ -39,17 +40,16 @@ export const Timeline = () => {
     }
   }
 
-  const likeBtnHandler = async (postId) => {
-    dispatch(setToast({ showToast: true, toastMessage: "Giving a heart to a post" }))
+  const likeBtnHandler = async (postId, userId) => {
+    dispatch(setToast({ showToast: true, toastMessage: "Heart actioned on post." }))
     try {
       const postLiked = await axios.post(
         `https://felicidad-api.herokuapp.com/posts/${postId}/like`,
-        {},
+        {likedByUser: userId},
       )
-      console.log(postLiked)
       if (postLiked.data.success) {
-        dispatch(setToast({ showToast: true, toastMessage: "You gave a heart to a post" }))
-        dispatch(postLikedByUser(postLiked.data.postUpdated))
+        dispatch(setToast({ showToast: true, toastMessage: postLiked.data.message }))
+        dispatch(postLikedByUser({postId, userId}))
       }
     } catch (error) {
       dispatch(setToast({ showToast: true, toastMessage: "Unable to heart a post" }))
@@ -114,7 +114,7 @@ export const Timeline = () => {
               avatarImg={post.user.profilePic ? post.user.profilePic : null}
               authorName={post.user.username}
               postText={post.caption}
-              postLikes={post.likes}
+              postLikes={post.likes.length}
               loggedInUserId={loggedInUser?._id}
               postUserId={post.user._id}
               onOptionsBtnClick={() => {
@@ -122,7 +122,7 @@ export const Timeline = () => {
                 setShowOptions((showOptions) => !showOptions)
                 setShowMenu(showMenu => !showMenu)
               }}
-              onLikeBtnClick={() => likeBtnHandler(post._id)}
+              onLikeBtnClick={() => likeBtnHandler(post._id, loggedInUser._id)}
             />
           )
         })}
