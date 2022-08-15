@@ -22,7 +22,8 @@ export const SignupBox = (props) => {
       <input
         onChange={props.signupEmail}
         className="inputOne"
-        type="text"
+        type="email"
+        pattern=".+@globex\.com"
         placeholder="Email"
       />
       <br />
@@ -39,11 +40,12 @@ export const SignupBox = (props) => {
         placeholder="Re-Password"
       />
       <div className='showPasswordContainer'>
-      <input 
-      onChange={()=> setShowPass(showPass => !showPass)}
-      checked={showPass}
-      type='checkbox' />
-      <label>Show Password</label>
+        <label className='showPassCheck'>
+          <input
+            onChange={() => setShowPass(showPass => !showPass)}
+            checked={showPass}
+            type='checkbox' />
+          Show Password</label>
       </div>
       <br />
       <button onClick={props.signupBtnClick} className="btnPrimary btnLogin">

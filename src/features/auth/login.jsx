@@ -12,14 +12,14 @@ export const Login = () => {
   const authState = useSelector((state) => state.auth)
 
   const loginHandler = (loginUserObj) => {
-    if (loginUserObj.username.length > 3 && loginUserObj.password.length > 3) {
+    if (loginUserObj.username.length > 3 && loginUserObj.password.length > 6) {
       try {
         if (authState.status === 'Logged Out' || 'Error Logging In') {
           dispatch(loginUser(loginUserObj))
           dispatch(setToast({ showToast: true, toastMessage: "Logging In" }))
         }
-      } catch(error) {
-        dispatch(setToast({ showToast: true, toastMessage: "Unable to Login Up" }))
+      } catch (error) {
+        dispatch(setToast({ showToast: true, toastMessage: "Unable to Login" }))
         console.log(error)
       }
     } else {
@@ -27,14 +27,28 @@ export const Login = () => {
     }
   }
 
+  const guestCredentials = () => {
+    setUsername('test')
+    setPassword('test123')
+  }
+
   return (
     <div>
+      <h1>Log In</h1>
       <LoginBox
         usernameText={(e) => setUsername(e.target.value)}
         passwordText={(e) => setPassword(e.target.value)}
+        usernameValue={username}
+        passwordValue={password}
         loginBtnClick={() =>
           loginHandler({ username: username, password: password })
         }
+        guestBtnClick={() => {
+          guestCredentials()
+          setTimeout(
+            loginHandler({ username: username, password: password }), 2500
+          )
+        }}
       />
       <p>
         Don't have an account? <Link to="/signup">Create One</Link>.

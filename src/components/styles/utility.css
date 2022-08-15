@@ -66,3 +66,7 @@
 .showPasswordContainer {
     margin: 0 0.5rem;
 }
+
+.showPassCheck {
+    cursor: pointer;
+}

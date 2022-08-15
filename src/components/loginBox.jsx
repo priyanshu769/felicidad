@@ -9,6 +9,7 @@ export const LoginBox = (props) => {
         onChange={props.usernameText}
         className="inputOne"
         type="text"
+        value={props.usernameValue}
         placeholder="Username"
       />
       <br />
@@ -16,14 +17,16 @@ export const LoginBox = (props) => {
         onChange={props.passwordText}
         className="inputOne"
         type={showPass ? 'text' : 'password'}
+        value={props.passwordValue}
         placeholder="Password"
       />
       <div className='showPasswordContainer'>
-      <input 
-      onChange={()=> setShowPass(showPass => !showPass)}
-      checked={showPass}
-      type='checkbox' />
-      <label>Show Password</label>
+        <label className='showPassCheck'>
+          <input
+            onChange={() => setShowPass(showPass => !showPass)}
+            checked={showPass}
+            type='checkbox' />
+          Show Password</label>
       </div>
       <br />
       <button
@@ -32,6 +35,13 @@ export const LoginBox = (props) => {
         type="submit"
       >
         Login
+      </button>
+      <button
+        onClick={props.guestBtnClick}
+        className="btnPrimary btnLogin"
+        type="submit"
+      >
+        Guest Login
       </button>
     </div>
   )
