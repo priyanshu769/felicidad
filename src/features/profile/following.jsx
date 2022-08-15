@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { FollowerCard, Loading } from '../../components'
 import { setToast } from '../toast/toastSlice'
+import { profileUnfollowed, profileFollowed } from './profileSlice'
 
 export const Following = () => {
   const { username } = useParams()
@@ -40,7 +41,7 @@ export const Following = () => {
           { headers: { Authorization: loggedInUserToken } },
         )
         if(unfollowUser.data.success){
-          console.log(unfollowUser)
+          dispatch(profileUnfollowed(userToFollow._id))
           dispatch(setToast({showToast: true, toastMessage: "User unfollowed"}))
         }
       } catch (error) {
@@ -55,7 +56,7 @@ export const Following = () => {
           { headers: { Authorization: loggedInUserToken } },
         )
         if(followUser.data.success){
-          console.log(followUser)
+          dispatch(profileFollowed(userToFollow._id))
           dispatch(setToast({showToast: true, toastMessage: "Followed User"}))
         }
       } catch (error) {

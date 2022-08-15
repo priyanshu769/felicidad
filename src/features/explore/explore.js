@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { FollowerCard, Loading } from '../../components'
 import { setToast } from '../toast/toastSlice'
+import { profileUnfollowed, profileFollowed } from '../profile/profileSlice'
 
 export const Explore = () => {
     const dispatch = useDispatch()
@@ -34,6 +35,7 @@ export const Explore = () => {
                     { headers: { Authorization: loggedInUserToken } },
                 )
                 if (unfollowUser.data.success) {
+                    dispatch(profileUnfollowed(userToFollow._id))
                     dispatch(setToast({ showToast: true, toastMessage: "User unfollowed" }))
                 }
             } catch (error) {
@@ -48,7 +50,7 @@ export const Explore = () => {
                     { headers: { Authorization: loggedInUserToken } },
                 )
                 if (followUser.data.success) {
-                    console.log(followUser)
+                    dispatch(profileFollowed(userToFollow._id))
                     dispatch(setToast({ showToast: true, toastMessage: "Followed User" }))
                 }
             } catch (error) {

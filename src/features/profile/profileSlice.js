@@ -35,9 +35,13 @@ const profileSlice = createSlice({
       state.error = action.payload
     },
     profileFollowed: (state, action) => {
+      console.log('profileFollowed triggered')
+      console.log(action, 'profileFollowed')
       state.loggedInUser = { ...state.loggedInUser, following: [...state.loggedInUser.following, action.payload] }
     },
     profileUnfollowed: (state, action) => {
+      console.log('profileUnfollowed triggered')
+      console.log(action, 'profileUnfollowed')
       const newFollowingList = state.loggedInUser.following.filter(userId => userId !== action.payload)
       state.loggedInUser = { ...state.loggedInUser, following: newFollowingList }
     },
