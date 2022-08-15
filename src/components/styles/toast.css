@@ -24,7 +24,7 @@
   @media only screen and (max-width: 480px) {
     .toastBox {
         width: 18rem;
-        position: absolute;
+        position: fixed;
         left: 2rem;
     }
 }
