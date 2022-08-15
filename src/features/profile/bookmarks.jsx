@@ -65,6 +65,7 @@ export const Bookmarks = () => {
                             postText={post.caption}
                             postLikes={post.likes.length}
                             postLiked={post.likes.includes(loggedInUser?._id)}
+                            loggedInUserId={'hide'}
                             onLikeBtnClick={() => likeBtnHandler(post._id, loggedInUser._id)}
                             onBookmarkBtnClick={() => bookmarkHandler(post._id, loggedInUser._id)}
                             postBookmarked={loggedInUser?.bookmarks?.includes(post._id)}
