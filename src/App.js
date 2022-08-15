@@ -8,6 +8,7 @@ import {
   Signup,
   EditProfile,
   Explore,
+  ExploreUsers,
   Bookmarks
 } from './features/index'
 import {
@@ -97,6 +98,11 @@ function App() {
           login={loggedInToken}
           path="/explore"
           element={<Explore />}
+        />
+        <PrivateRoute
+          login={loggedInToken}
+          path="/exploreUsers"
+          element={<ExploreUsers />}
         />
         <PrivateRoute
           login={loggedInToken}
