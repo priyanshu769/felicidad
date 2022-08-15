@@ -20,7 +20,6 @@ export const Timeline = () => {
   const newPost = () => {
     return {
       caption: newPostText,
-      likes: 0,
       user: loggedInUser?._id,
     }
   }
@@ -32,10 +31,11 @@ export const Timeline = () => {
         'https://felicidad-api.herokuapp.com/posts/',
         newPost,
       )
+      console.log(postAdded.data)
       if (postAdded.data.success) {
         dispatch(setToast({ showToast: true, toastMessage: "Post added" }))
         dispatch(addPost(postAdded.data.postAdded))
-      }
+      } else dispatch(setToast({ showToast: true, toastMessage: "Error occured while posting" }))
     } catch (error) {
       dispatch(setToast({ showToast: true, toastMessage: "Unable to add post" }))
       console.log(error)
@@ -52,7 +52,7 @@ export const Timeline = () => {
       if (postLiked.data.success) {
         dispatch(setToast({ showToast: true, toastMessage: postLiked.data.message }))
         dispatch(postLikedByUser({ postId, userId }))
-      }
+      } else  dispatch(setToast({ showToast: true, toastMessage: "Error occured while liking post." }))
     } catch (error) {
       dispatch(setToast({ showToast: true, toastMessage: "Unable to heart a post" }))
       console.log(error)
@@ -69,7 +69,7 @@ export const Timeline = () => {
         if(postBookmarked.data.success){
           dispatch(setToast({ showToast: true, toastMessage: postBookmarked.data.message }))
           dispatch(postBookmarkedByUser({postId}))
-        }
+        } else  dispatch(setToast({ showToast: true, toastMessage: "Error occured while bookmarking post." }))
     } catch (error) {
       console.log(error)
     }

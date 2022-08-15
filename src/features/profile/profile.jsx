@@ -31,7 +31,6 @@ export const Profile = () => {
   const newPost = () => {
     return {
       caption: newPostText,
-      likes: 0,
       user: loggedInUser?._id
     }
   }
@@ -46,7 +45,7 @@ export const Profile = () => {
       if (postAdded.data.success) {
         dispatch(addPost(postAdded.data.postAdded))
         dispatch(setToast({ showToast: true, toastMessage: "Post added" }))
-      }
+      } else dispatch(setToast({ showToast: true, toastMessage: "Error occured while posting" }))
     } catch (error) {
       console.log(error)
       dispatch(setToast({ showToast: true, toastMessage: "Unable to add post" }))
@@ -101,7 +100,7 @@ export const Profile = () => {
       if (postLiked.data.success) {
         dispatch(setToast({ showToast: true, toastMessage: postLiked.data.message }))
         dispatch(postLikedByUser({ postId, userId }))
-      }
+      } else  dispatch(setToast({ showToast: true, toastMessage: "Error occured while liking post." }))
     } catch (error) {
       dispatch(setToast({ showToast: true, toastMessage: "Unable to heart a post" }))
       console.log(error)
@@ -118,7 +117,7 @@ export const Profile = () => {
       if (postBookmarked.data.success) {
         dispatch(setToast({ showToast: true, toastMessage: postBookmarked.data.message }))
         dispatch(postBookmarkedByUser({ postId }))
-      }
+      } else  dispatch(setToast({ showToast: true, toastMessage: "Error occured while bookmarking post." }))
     } catch (error) {
       console.log(error)
     }
