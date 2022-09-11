@@ -7,14 +7,12 @@ import { setToast } from '../toast/toastSlice'
 import { postBookmarkedByUser } from '../profile/profileSlice'
 import { Link } from 'react-router-dom'
 
-
 export const Explore = () => {
     const loggedInUserToken = useSelector((state) => state.auth.loggedInToken)
     const loggedInUser = useSelector((state) => state.profile.loggedInUser)
     const allPosts = useSelector((state) => state.timeline.posts)
     const dispatch = useDispatch()
     const [explorePosts, setExplorePosts] = useState([])
-
     useEffect(() => {
         const explorePosts = allPosts.filter(
             (post) => post.user._id !== loggedInUser._id)
@@ -56,7 +54,8 @@ export const Explore = () => {
 
     return (
         <div>
-            <h3>Explore <Link to='/exploreUsers'>Users</Link></h3>
+            <h2 className='exploreUsers'>Explore <Link to='/exploreUSers'>Users</Link></h2>
+            <hr />
             {explorePosts.length === 0
                 ? 'Zero posts to show.'
                 : explorePosts.map((post) => {
