@@ -1,5 +1,5 @@
 import './App.css'
-import { Routes, Route, NavLink } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import {
   Timeline,
   Profile,
@@ -16,6 +16,7 @@ import {
   PageNotFound,
   PrivateRoute,
   ReversePrivateRoute,
+  SidebarBtn,
   Toast,
 } from './components/index'
 import { useSelector, useDispatch } from 'react-redux'
@@ -39,7 +40,7 @@ function App() {
   const { showToast, toastMessage } = useSelector(state => state.toast)
   const timeline = useSelector((state) => state.timeline)
   const dispatch = useDispatch()
-
+  const navigate = useNavigate()
   useEffect(() => {
     const dataFromLocalStorage = JSON.parse(
       localStorage?.getItem('loggedInToken'),
@@ -80,14 +81,14 @@ function App() {
 
   return (
     <div className="App">
-      <div className="navbar" style={{ display: loggedInUser && loggedInToken ? 'block' : 'none' }}>
-        <NavLink activeClassName="navLinkActive" className="navLink" to="/"><BiHomeHeart size={35} /></NavLink>
-        <NavLink activeClassName="navLinkActive" className="navLink" to="/explore"><FiCompass size={35} /></NavLink>
-        <NavLink activeClassName="navLinkActive" className="navLink" to="/bookmarks"><BsBookmark size={35} /></NavLink>
-        <NavLink activeClassName="navLinkActive" className="navLink" to={`/${loggedInUser?.username}`}><FiUser size={35} /></NavLink>
-        {loggedInToken && <button className="navLink logoutBtn" onClick={logoutHandler}><FiLogOut size={35} /></button>}
-      </div>
       {showToast && <Toast toastMessage={toastMessage} />}
+      {loggedInToken && <nav className='nav'>
+        <SidebarBtn btnAction={() => navigate('/')} btnName={<BiHomeHeart size={35} />} />
+        <SidebarBtn btnAction={() => navigate('/explore')} btnName={<FiCompass size={35} />} />
+        <SidebarBtn btnAction={() => navigate('/bookmarks')} btnName={<BsBookmark size={35} />} />
+        <SidebarBtn btnAction={() => navigate(`/${loggedInUser?.username}`)} btnName={<FiUser size={35} />} />
+        <SidebarBtn btnAction={logoutHandler} btnName={<FiLogOut size={35} />} />
+      </nav>}
       <Routes>
         <DoublePrivateRoute
           login={loggedInToken}

@@ -3,16 +3,17 @@
     border-radius: 0.5rem;
     box-shadow: 2px 3px var(--off-white);
     position: fixed;
+    top: 3rem;
     left: 28rem;
     text-align: center;
-    background-color: var(--white);
+    background-color: var(--primary-dark);
     width: 600px;
     margin: auto;
-    animation: slideDown 0.8s ease;
+    animation: slideDown 0.3s ease;
 }
 
 .toastMessage {
-    color: var(--primary-color);
+    color: var(--white);
     font-weight: bolder;
 }
 

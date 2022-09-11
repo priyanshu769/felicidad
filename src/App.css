@@ -21,22 +21,11 @@
     margin: auto;
 }
 
-.navbar {
-    margin: auto;
-    width: 100%;
-    align-items: center;
-}
-
-.navLink {
-    color: var(--primary-dark);
-    text-decoration: none;
+.nav {
+    display: flex;
+    justify-content: space-around;
     padding: 1rem;
-    border: none;
-    cursor: pointer;
-}
-
-.logoutBtn {
-    background: none;
+    border-bottom: 1px solid var(--off-grey);
 }
 
 @media screen and (max-width: 900px) {
