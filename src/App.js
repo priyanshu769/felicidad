@@ -33,6 +33,7 @@ import { setToast } from './features/toast/toastSlice'
 import { BiHomeHeart } from 'react-icons/bi'
 import { FiUser, FiLogOut, FiCompass } from 'react-icons/fi'
 import { BsBookmark } from 'react-icons/bs'
+import { SidebarLeft, SidebarRight } from './components'
 
 function App() {
   const { loggedInToken } = useSelector((state) => state.auth)
@@ -81,62 +82,66 @@ function App() {
 
   return (
     <div className="App">
-      {showToast && <Toast toastMessage={toastMessage} />}
-      {loggedInToken && <nav className='nav'>
-        <SidebarBtn btnAction={() => navigate('/')} btnName={<BiHomeHeart size={35} />} />
-        <SidebarBtn btnAction={() => navigate('/explore')} btnName={<FiCompass size={35} />} />
-        <SidebarBtn btnAction={() => navigate('/bookmarks')} btnName={<BsBookmark size={35} />} />
-        <SidebarBtn btnAction={() => navigate(`/${loggedInUser?.username}`)} btnName={<FiUser size={35} />} />
-        <SidebarBtn btnAction={logoutHandler} btnName={<FiLogOut size={35} />} />
-      </nav>}
-      <Routes>
-        <DoublePrivateRoute
-          login={loggedInToken}
-          element={<Timeline />}
-          path="/"
-        />
-        <PrivateRoute
-          login={loggedInToken}
-          path="/explore"
-          element={<Explore />}
-        />
-        <PrivateRoute
-          login={loggedInToken}
-          path="/exploreUsers"
-          element={<ExploreUsers />}
-        />
-        <PrivateRoute
-          login={loggedInToken}
-          path="/:username"
-          element={<Profile />}
-        />
-        <PrivateRoute
-          login={loggedInToken}
-          path="/bookmarks"
-          element={<Bookmarks />}
-        />
-        <PrivateRoute
-          login={loggedInToken}
-          path="/:username/followers"
-          element={<Followers />}
-        />
-        <PrivateRoute
-          login={loggedInToken}
-          path="/:username/following"
-          element={<Following />}
-        />
-        <PrivateRoute
-          login={loggedInToken}
-          path="/:username/edit"
-          element={<EditProfile />}
-        />
-        <ReversePrivateRoute
-          login={loggedInToken}
-          path="/signup"
-          element={<Signup />}
-        />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
+    {showToast && <Toast toastMessage={toastMessage} />}
+      <SidebarLeft />
+      <div className='mainContent'>
+        {loggedInToken && <nav className='nav'>
+          <SidebarBtn btnAction={() => navigate('/')} btnName={<BiHomeHeart size={35} />} />
+          <SidebarBtn btnAction={() => navigate('/explore')} btnName={<FiCompass size={35} />} />
+          <SidebarBtn btnAction={() => navigate('/bookmarks')} btnName={<BsBookmark size={35} />} />
+          <SidebarBtn btnAction={() => navigate(`/${loggedInUser?.username}`)} btnName={<FiUser size={35} />} />
+          <SidebarBtn btnAction={logoutHandler} btnName={<FiLogOut size={35} />} />
+        </nav>}
+        <Routes>
+          <DoublePrivateRoute
+            login={loggedInToken}
+            element={<Timeline />}
+            path="/"
+          />
+          <PrivateRoute
+            login={loggedInToken}
+            path="/explore"
+            element={<Explore />}
+          />
+          <PrivateRoute
+            login={loggedInToken}
+            path="/exploreUsers"
+            element={<ExploreUsers />}
+          />
+          <PrivateRoute
+            login={loggedInToken}
+            path="/:username"
+            element={<Profile />}
+          />
+          <PrivateRoute
+            login={loggedInToken}
+            path="/bookmarks"
+            element={<Bookmarks />}
+          />
+          <PrivateRoute
+            login={loggedInToken}
+            path="/:username/followers"
+            element={<Followers />}
+          />
+          <PrivateRoute
+            login={loggedInToken}
+            path="/:username/following"
+            element={<Following />}
+          />
+          <PrivateRoute
+            login={loggedInToken}
+            path="/:username/edit"
+            element={<EditProfile />}
+          />
+          <ReversePrivateRoute
+            login={loggedInToken}
+            path="/signup"
+            element={<Signup />}
+          />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </div>
+      <SidebarRight />
     </div>
   )
 }

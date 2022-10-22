@@ -1,6 +1,12 @@
 .newPost {
-  width: 90%;
+  min-width: 90%;
   margin: auto;
+}
+
+.textareaHolder {
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .newPostText {

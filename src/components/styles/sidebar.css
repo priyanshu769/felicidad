@@ -1,0 +1,19 @@
+.sidebar {
+    width: 20%;
+    padding: 1rem 3rem;
+    display: block;
+}
+
+.sidebarPills {
+    list-style: none;
+}
+
+.sidebarPill {
+    padding: 0.5rem;
+}
+
+@media screen and (max-width: 900px) {
+    .sidebar {
+        display: none;
+    }
+}

@@ -1,5 +1,6 @@
 .postContainer {
-    width: auto;
+    width: 100%;
+    min-width: ;
     margin: 0.5rem;
     padding: 0.5rem;
     border: 2px solid var(--off-white);
@@ -18,7 +19,7 @@
 }
 
 .postText {
-  padding: 0.5rem 0;
+    padding: 0.5rem 0;
 }
 
 .showOptionsBtn {
@@ -27,4 +28,10 @@
 
 .postLikesNumber {
     font-size: 16px;
+}
+
+@media screen and (max-width: 900px) {
+    .postContainer {
+        width: auto;
+    }
 }

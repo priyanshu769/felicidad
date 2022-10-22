@@ -1,4 +1,4 @@
-.followerCredentials {
+.followerCard {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -6,24 +6,18 @@
   margin: 0.5rem;
   border: 2px solid var(--off-white);
   border-radius: 0.5rem;
-  box-shadow: 7px 6px 5px var(--off-white);
+  box-shadow: 5px 5px 5px var(--off-white);
 }
 
-.imgAvatarSmContainer {
+.userNameImageHolder {
   display: flex;
 }
 
-.usernameFollowerCard {
-  padding-left: 0.5rem;
+.username {
+  padding: 0.5rem 0 0 0.5rem;
   color: var(--primary-dark);
 }
 
 .btnFollowerCard {
   margin-top: 0.5rem;
-}
-
-@media only screen and (max-width: 900px) {
-  .followerCredentials {
-    width: 20rem;
-  }
 }

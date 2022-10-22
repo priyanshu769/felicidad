@@ -17,19 +17,30 @@
 .App {
     font-family: "Poppins", serif;
     color: var(--primary-dark);
-    width: 700px;
-    margin: auto;
+    display: flex;
+    justify-content: space-between;
 }
 
 .nav {
-    display: flex;
-    justify-content: space-around;
-    padding: 1rem;
-    border-bottom: 1px solid var(--off-grey);
+    display: none;
+}
+
+.mainContent {
+    width: 100%;
 }
 
 @media screen and (max-width: 900px) {
+    .mainContent {
+        width: auto;
+    }
     .App {
         width: auto;
+    }
+
+    .nav {
+        display: flex;
+        justify-content: space-around;
+        padding: 1rem;
+        border-bottom: 1px solid var(--off-grey);
     }
 }

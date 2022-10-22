@@ -5,14 +5,16 @@ import './styles/followerCard.css'
 
 export const FollowerCard = (props) => {
   return (
-    <div className="followerCredentials">
+    <div className="followerCard">
+    <div className='userNameImageHolder'>
       <div className="imgAvatarSmContainer">
         <img
           alt="profile"
           className="imgAvatar"
           src={props.avatarImg ? props.avatarImg : "https://bit.ly/2Wg4Dg2"}
         />
-        <Link className="usernameLink usernameFollowerCard" to={`/${props.username}`}>
+      </div>
+        <Link className="usernameLink" to={`/${props.username}`}>
           <p className="username">@{props.username}</p>
         </Link>
       </div>
