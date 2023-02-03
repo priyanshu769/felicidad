@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export const fetchPosts = createAsyncThunk('/timeline/fetchPosts', async () => {
   console.log('fetchPostsTriggered')
-  const res = await axios.get('https://felicidad-api.herokuapp.com/posts')
+  const res = await axios.get('https://felicidad-api.cyclic.app/posts')
   return res.data
 })
 

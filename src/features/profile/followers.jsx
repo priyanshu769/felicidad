@@ -38,7 +38,7 @@ export const Followers = () => {
       dispatch(setToast({ showToast: true, toastMessage: "Unfollowing User" }))
       try {
         const unfollowUser = await axios.get(
-          `https://felicidad-api.herokuapp.com/users/${userToFollow._id}/unfollow`,
+          `https://felicidad-api.cyclic.app/users/${userToFollow._id}/unfollow`,
           { headers: { Authorization: loggedInUserToken } },
         )
         if (unfollowUser.data.success) {
@@ -53,7 +53,7 @@ export const Followers = () => {
       dispatch(setToast({ showToast: true, toastMessage: "Following User" }))
       try {
         const followUser = await axios.get(
-          `https://felicidad-api.herokuapp.com/users/${userToFollow._id}/follow`,
+          `https://felicidad-api.cyclic.app/users/${userToFollow._id}/follow`,
           { headers: { Authorization: loggedInUserToken } },
         )
         if (followUser.data.success) {

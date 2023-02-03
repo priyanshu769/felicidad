@@ -28,7 +28,7 @@ export const Timeline = () => {
     dispatch(setToast({ showToast: true, toastMessage: "Adding post" }))
     try {
       const postAdded = await axios.post(
-        'https://felicidad-api.herokuapp.com/posts/',
+        'https://felicidad-api.cyclic.app/posts/',
         newPost,
       )
       console.log(postAdded.data)
@@ -46,7 +46,7 @@ export const Timeline = () => {
     dispatch(setToast({ showToast: true, toastMessage: "Heart actioned on post." }))
     try {
       const postLiked = await axios.post(
-        `https://felicidad-api.herokuapp.com/posts/${postId}/like`,
+        `https://felicidad-api.cyclic.app/posts/${postId}/like`,
         { likedByUser: userId },
       )
       if (postLiked.data.success) {
@@ -63,7 +63,7 @@ export const Timeline = () => {
     dispatch(setToast({ showToast: true, toastMessage: "Updating Bookmarks." }))
     try {
       const postBookmarked = await axios.post(
-        `https://felicidad-api.herokuapp.com/bookmark/${postId}/`,
+        `https://felicidad-api.cyclic.app/bookmark/${postId}/`,
         {},
         { headers: { Authorization: loggedInUserToken } })
         if(postBookmarked.data.success){
@@ -79,7 +79,7 @@ export const Timeline = () => {
     dispatch(setToast({ showToast: true, toastMessage: "Deleting post" }))
     try {
       const deletePost = await axios.post(
-        `https://felicidad-api.herokuapp.com/posts/${postId}/delete`,
+        `https://felicidad-api.cyclic.app/posts/${postId}/delete`,
         {},
       )
       if (deletePost.data.success) {

@@ -5,7 +5,7 @@ export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async (loginUserObj) => {
     const res = await axios.post(
-      'https://felicidad-api.herokuapp.com/login',
+      'https://felicidad-api.cyclic.app/login',
       loginUserObj,
     )
     if (res.data.success) {
@@ -21,7 +21,7 @@ export const signupUser = createAsyncThunk(
   'auth/signupNewUser',
   async (newUserObj) => {
     const res = await axios.post(
-      'https://felicidad-api.herokuapp.com/signup',
+      'https://felicidad-api.cyclic.app/signup',
       newUserObj,
     )
     if (res.data.success) {

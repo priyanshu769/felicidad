@@ -23,7 +23,7 @@ export const Explore = () => {
         dispatch(setToast({ showToast: true, toastMessage: "Heart actioned on post." }))
         try {
             const postLiked = await axios.post(
-                `https://felicidad-api.herokuapp.com/posts/${postId}/like`,
+                `https://felicidad-api.cyclic.app/posts/${postId}/like`,
                 { likedByUser: userId },
             )
             if (postLiked.data.success) {
@@ -40,7 +40,7 @@ export const Explore = () => {
         dispatch(setToast({ showToast: true, toastMessage: "Updating Bookmarks." }))
         try {
             const postBookmarked = await axios.post(
-                `https://felicidad-api.herokuapp.com/bookmark/${postId}/`,
+                `https://felicidad-api.cyclic.app/bookmark/${postId}/`,
                 {},
                 { headers: { Authorization: loggedInUserToken } })
             if (postBookmarked.data.success) {

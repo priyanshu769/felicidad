@@ -39,7 +39,7 @@ export const Profile = () => {
     dispatch(setToast({ showToast: true, toastMessage: "Adding post" }))
     try {
       const postAdded = await axios.post(
-        'https://felicidad-api.herokuapp.com/posts/',
+        'https://felicidad-api.cyclic.app/posts/',
         newPost,
       )
       if (postAdded.data.success) {
@@ -57,7 +57,7 @@ export const Profile = () => {
       dispatch(setToast({ showToast: true, toastMessage: "Unfollowing User" }))
       try {
         const unfollowUser = await axios.get(
-          `https://felicidad-api.herokuapp.com/users/${userToFollow._id}/unfollow`,
+          `https://felicidad-api.cyclic.app/users/${userToFollow._id}/unfollow`,
           { headers: { Authorization: loggedInUserToken } },
         )
         console.log(unfollowUser.data)
@@ -74,7 +74,7 @@ export const Profile = () => {
       dispatch(setToast({ showToast: true, toastMessage: "Following User" }))
       try {
         const followUser = await axios.get(
-          `https://felicidad-api.herokuapp.com/users/${userToFollow._id}/follow`,
+          `https://felicidad-api.cyclic.app/users/${userToFollow._id}/follow`,
           { headers: { Authorization: loggedInUserToken } },
         )
         console.log(followUser.data)
@@ -94,7 +94,7 @@ export const Profile = () => {
     dispatch(setToast({ showToast: true, toastMessage: "Heart actioned on post." }))
     try {
       const postLiked = await axios.post(
-        `https://felicidad-api.herokuapp.com/posts/${postId}/like`,
+        `https://felicidad-api.cyclic.app/posts/${postId}/like`,
         { likedByUser: userId },
       )
       if (postLiked.data.success) {
@@ -111,7 +111,7 @@ export const Profile = () => {
     dispatch(setToast({ showToast: true, toastMessage: "Updating Bookmarks." }))
     try {
       const postBookmarked = await axios.post(
-        `https://felicidad-api.herokuapp.com/bookmark/${postId}/`,
+        `https://felicidad-api.cyclic.app/bookmark/${postId}/`,
         {},
         { headers: { Authorization: loggedInUserToken } })
       if (postBookmarked.data.success) {
@@ -127,7 +127,7 @@ export const Profile = () => {
     dispatch(setToast({ showToast: true, toastMessage: "Deleting post" }))
     try {
       const deletePost = await axios.post(
-        `https://felicidad-api.herokuapp.com/posts/${postId}/delete`,
+        `https://felicidad-api.cyclic.app/posts/${postId}/delete`,
         {},
       )
       if (deletePost.data.success) {
@@ -153,7 +153,7 @@ export const Profile = () => {
     } else {
       ; (async () => {
         const user = await axios.get(
-          `https://felicidad-api.herokuapp.com/users/u/${username}`,
+          `https://felicidad-api.cyclic.app/users/u/${username}`,
           { headers: { Authorization: loggedInUserToken } },
         )
         setUserToShow(user.data.restUserData)

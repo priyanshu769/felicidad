@@ -40,7 +40,7 @@ export const EditProfile = () => {
     dispatch(setToast({showToast: true, toastMessage: "Updating profile"}))
     try {
       const saveProfile = await axios.post(
-        `https://felicidad-api.herokuapp.com/users/${userLoggedIn._id}`,
+        `https://felicidad-api.cyclic.app/users/${userLoggedIn._id}`,
         editedProfile,
         { headers: { Authorization: userLoggedInToken } },
         )

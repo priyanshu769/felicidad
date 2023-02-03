@@ -5,7 +5,7 @@ export const fetchLoggedInUser = createAsyncThunk(
   'profile/fetchLoggedInUser',
   async (loggedInUserToken) => {
     try {
-      const res = await axios.get('https://felicidad-api.herokuapp.com/users/', {
+      const res = await axios.get('https://felicidad-api.cyclic.app/users/', {
         headers: { Authorization: loggedInUserToken },
       })
       if (res.data.success) {
